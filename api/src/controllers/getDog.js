@@ -52,22 +52,6 @@ const dataDogs = async () => {
   return allDataMixed;
 };
 
-const dogsByName = async (req, res) => {
-  const { name } = req.query;
-  const perros = await dataDogs();
-  if (name) {
-    const dog = perros.filter((d) =>
-      d.name.toLowerCase().includes(name.toLowerCase())
-    ); //si el perro existe guardame sus parametros aca.
-    dog.length
-      ? res.status(200).send(dog)
-      : res.status(404).send("Dog not found");
-  } else {
-    res.status(200).send(perros);
-  }
-};
-
 module.exports = {
   dataDogs,
-  dogsByName,
 };
