@@ -1,0 +1,42 @@
+.mainContainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    background-color: rgb(220, 210, 150);
+}
+
+.topContainer{
+    height: 8%;
+    width: 100%;
+    display: flex;
+    position: relative;
+    background-color: black;
+}
+
+.topLeftContainer{
+    left: 0;
+    width: 20%;
+    height: auto;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.logo{
+    width: inherit;
+    height: inherit;
+    text-decoration: none;
+    font-family: Caprasimo;
+    font-size: 120%;
+    color: white;
+}
+
+/* .midContainer{
+
+}
+
+.bottomContainer{
+
+}  */

@@ -20,14 +20,15 @@ const createDog = async (req, res) => {
       weightMin,
       weightMax,
       life_span,
+      temperaments,
       // image: image || "https://www.publicdomainpictures.net/pictures/260000/velka/dog-face-cartoon-illustration.jpg",
     });
 
     if (temperaments && temperaments.length > 0) {
-      const associatedTemperaments = await Temperament.findAll({
+      const temperamentosAgregados = await Temperament.findAll({
         where: { name: temperaments },
       });
-      dog.addTemperament(associatedTemperaments);
+      dog.addTemperament(temperamentosAgregados);
     }
 
     res.status(200).send("Perro creado correctamente!");

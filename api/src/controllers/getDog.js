@@ -48,9 +48,10 @@ const dogsDb = async () => {
 const dataDogs = async () => {
   const dataFromApi = await dogsApi();
   const dataFromDb = await dogsDb();
-  const allDataMixed = [...dataFromApi, ...dataFromDb];
+  const allDataMixed = [...dataFromApi, ...dataFromDb]; 
   return allDataMixed;
 };
+
 
 module.exports = {
   dataDogs,

@@ -1,0 +1,105 @@
+
+.containerPadre{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+}
+
+.containerIzq{
+    height: 100%;
+    width: 40%;
+    left: 0;
+    display:block;
+    justify-content: center;
+    align-items: center;
+    background-color: #00c1b5;
+    border-right: 0;
+}
+
+.containerIzqTop{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(220, 210, 150);
+    border-right: 0;
+}
+
+.containerIzqBottom{
+    height: 50%;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(220, 210, 150);
+}
+
+.titulo{
+    margin-top: 45%;
+    font-size: 135px;
+    font-weight: 400;
+    font-family: Caprasimo;
+    color: #031220;
+}
+
+.btn {
+    font-family: sans-serif;
+    letter-spacing: 0.2em;
+    padding: 1.1em 1.3em;
+    background: none;
+    border: 2px solid #fff;
+    font-size: 27px;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    border-radius: 12px;
+    background-color: #e5053a;
+    font-weight: bolder;
+    box-shadow: 0 2px 0 2px #000;
+   }
+   
+   .btn:before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 120%;
+    background-color: #0d3b66 ;
+    top: 50%;
+    transform: skewX(30deg) translate(-150%, -50%);
+    transition: all 0.5s;
+   }
+   
+   .btn:hover {
+    background-color: #ddce11;
+    color: #131313;
+    box-shadow: 0 2px 0 2px #0d3b66;
+   }
+   
+   .btn:hover::before {
+    transform: skewX(30deg) translate(280%, -50%);
+    transition-delay: 0.1s;
+   }
+   
+   .btn:active {
+    transform: scale(0.9);
+   }
+
+.containerDer{
+    display: flex;
+    height: 100%;
+    width: 60%;
+    right: 0;
+    border: 15px solid black;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
+    background-size: 70% 90%;
+    background-image: url("../../../assets/frenchbulldog.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #ddce11;
+}
