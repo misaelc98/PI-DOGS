@@ -8,9 +8,9 @@ const intialState = {
 const rootReducer = (state = intialState, action) => {
   switch (action.type) {
     case "GET_ALL_DOGS":
-      action.payload.forEach(element => {
+      action.payload.forEach((element) => {
         if (!element.temperaments[0]) {
-          element.temperaments[0] = "no-temperaments" //eliminamos arreglos vacios de temperamentos
+          element.temperaments[0] = "no-temperaments";
         }
       });
       return {
@@ -19,10 +19,10 @@ const rootReducer = (state = intialState, action) => {
         allDogs: action.payload,
       };
     case "GET_TEMPERAMENTS":
-      const filteresTemp = action.payload.filter((temp) => temp.name !== ""); //eliminar razas con strings vacios
+      const filteredTemp = action.payload.filter((temp) => temp.name !== "");
       return {
         ...state,
-        temperaments: filteresTemp,
+        temperaments: filteredTemp,
       };
 
     case "GET_FILTER_TEMPERAMENTS":
@@ -35,11 +35,10 @@ const rootReducer = (state = intialState, action) => {
           let found = allDogs[i].temperaments.find((t) => t === action.payload);
           if (found) {
             filteredDogs.push(allDogs[i]);
-          } //todos los perros en la posicion de ese momento
+          }
         }
       }
       return {
-        //return funciona correcto
         ...state,
         dogs: filteredDogs,
       };
@@ -100,13 +99,14 @@ const rootReducer = (state = intialState, action) => {
         dogs: sortedWeight,
       };
     case "SHOW_DOG_DETAILS":
-      let myDetails = action.payload
-      if (!myDetails[0].temperaments[0]) { //agregamos "no-temperaments" a arreglos sin elementos dentro
-        myDetails[0].temperaments[0] = "no-temperaments"
+      let myDetails = action.payload;
+      if (!myDetails[0].temperaments[0]) {
+        //agregamos "no-temperaments" a arreglos sin elementos dentro
+        myDetails[0].temperaments[0] = "no-temperaments";
       }
       return {
         ...state,
-        details: myDetails
+        details: myDetails,
       };
     default:
       return state;

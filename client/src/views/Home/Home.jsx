@@ -16,31 +16,30 @@ import Header from "../../components/Header/Header";
 import Slider from "../../components/Galery/Slider";
 //#00c1b5 Color celeste
 
-function Home () {
+function Home() {
   const imagesHome = [
-    'https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2069.jpg',
-    'https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2112.jpg',
-    'https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2097.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsymz8I3EPDTrJU-mhoAl0-L_IopXlVRfEDRb2rNudWfTT0nsjuV8Cwax3Dvdbnm980g',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTARRO-9pbyNQib4OzlWxLthxtZi8uIAqcXfne6Ngu3xqSkAZd89ztPvWDIV8LnbO-JXJo',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ30Ij5z1Pk9Se7tCTH4fo0mkGG9peNLePdtV6DCtdwIfap2F9XQExj7A2uVNLBozC0MmU',
-
+    "https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2069.jpg",
+    "https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2112.jpg",
+    "https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2097.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsymz8I3EPDTrJU-mhoAl0-L_IopXlVRfEDRb2rNudWfTT0nsjuV8Cwax3Dvdbnm980g",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTARRO-9pbyNQib4OzlWxLthxtZi8uIAqcXfne6Ngu3xqSkAZd89ztPvWDIV8LnbO-JXJo",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ30Ij5z1Pk9Se7tCTH4fo0mkGG9peNLePdtV6DCtdwIfap2F9XQExj7A2uVNLBozC0MmU",
   ];
 
   const dispatch = useDispatch();
-  const allDogs = useSelector(state => state.dogs);    //valores del estado global de redux que requiero
-  const allTemperaments = useSelector(state => state.temperaments);
+  const allDogs = useSelector((state) => state.dogs); //valores del estado global de redux que requiero
+  const allTemperaments = useSelector((state) => state.temperaments);
 
   const [currentPage, setCurrentPage] = useState(1);
   const dogsPerPage = 8;
-  const lastIndex = currentPage * dogsPerPage; 
+  const lastIndex = currentPage * dogsPerPage;
   const firstIndex = lastIndex - dogsPerPage;
-  const currentDogs = allDogs.slice(firstIndex, lastIndex);    //elementos a renderizar en la pagina, segun el valor de paginado
+  const currentDogs = allDogs.slice(firstIndex, lastIndex); //elementos a renderizar en la pagina, segun el valor de paginado
 
   // console.log(currentDogs);
 
   const paginado = (pageNumber) => {
-    setCurrentPage(pageNumber)
+    setCurrentPage(pageNumber);
   };
 
   // eslint-disable-next-line
@@ -53,7 +52,7 @@ function Home () {
   }, [dispatch]);
 
   const handleFilterByTemperament = (e) => {
-    e.preventDefault();    
+    e.preventDefault();
     dispatch(FilterByTemperament(e.target.value));
   };
 
@@ -69,41 +68,55 @@ function Home () {
     setOrden(`Ordenado ${e.target.value}`);
   };
 
-
   return (
     <div className={style.mainContainer}>
       <div className={style.topContainer}>
         <Header />
       </div>
       <div className={style.bodyContainer}>
-        <div className={style.leftBody}>
-          <Slider images={imagesHome} />
+        <div className={`${style.pagination}`}>
+          <Paginate
+            dogsPerPage={dogsPerPage}
+            allDogs={allDogs.length}
+            paginado={paginado}
+          />{" "}
+          {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
+        </div>
+        <div className={style.main_container}>
+          <div className={style.container_cards}>
+            {currentDogs?.map((el) => {
+              //validacion que existan los datos
+              return (
+                <div className={`${style.container_card}`} key={el.id}>
+                  <NavLink to={"/dog-detail/" + el.id}>
+                    {
+                      <Card
+                        key={el.id}
+                        image={el.image}
+                        name={el.name}
+                        temperaments={
+                          el.temperaments[0].name
+                            ? el.temperaments.map((el) => el.name)
+                            : el.temperaments
+                        }
+                      />
+                      //si temperaments viene en un formato distinto desde la BD
+                    }
+                  </NavLink>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
-      <div className={style.main_container}>
-      <div className={style.container_cards}>
-        {currentDogs?.map((el) => {             //validacion que existan los datos
-          return(
-            <div className={`${style.container_card}`} key={el.id}>
-              <NavLink to={"/dog-detail/"+el.id}>
-                {
-                  <Card key={el.id} image={el.image} name={el.name} temperaments={el.temperaments[0].name ? el.temperaments.map(el => el.name) : el.temperaments}/>
-                  //si temperaments viene en un formato distinto desde la BD
-                }
-              </NavLink>
-            </div>      
-          )
-        })}
-      </div>
-      <div className={`${style.pagination}`}>
-        <Paginate dogsPerPage={dogsPerPage} allDogs={allDogs.length} paginado={paginado}/> {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
-      </div>
-    </div>
     </div>
   );
 }
 
 export default Home;
 
-
-
+{
+  /* <div className={style.leftBody}>
+          <Slider images={imagesHome} />
+        </div> */
+}
