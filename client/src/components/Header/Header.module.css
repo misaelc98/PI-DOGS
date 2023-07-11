@@ -1,0 +1,16 @@
+.mainContainer{
+    width: 100%;
+    top:0;
+    height: auto;
+    background-color: #e5053a;
+    box-shadow: 0 2px 0 5px #00c1b5;
+}
+
+.logo{
+    position: absolute;
+    left: 3%;
+    text-decoration: none;
+    font-family: Caprasimo;
+    color: white;
+    font-size: 120%;
+}

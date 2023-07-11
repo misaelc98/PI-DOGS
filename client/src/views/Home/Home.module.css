@@ -1,7 +1,7 @@
 .mainContainer{
     height: 100%;
     width: 100%;
-    display: flex;
+    display:block;
     position: fixed;
     background-color: rgb(220, 210, 150);
 }
@@ -11,32 +11,45 @@
     width: 100%;
     display: flex;
     position: relative;
-    background-color: black;
 }
 
-.topLeftContainer{
-    left: 0;
-    width: 20%;
-    height: auto;
+.bodyContainer{
+    width: 100%;
+    height: 100%;
     color: white;
-    justify-content: center;
-    align-items: center;
+    display: flex;
     
 }
 
-.logo{
-    width: inherit;
-    height: inherit;
-    text-decoration: none;
-    font-family: Caprasimo;
-    font-size: 120%;
-    color: white;
-}
-
-/* .midContainer{
+.leftBody{
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
 
 }
 
-.bottomContainer{
+.container_cards{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5% 0.9%;
+    justify-items: center;
+    padding: 2rem 0 2rem 0;
+}
 
-}  */
+.container_card{ /* estilos de carta individual */
+    background-color: #25b687;
+    width: 92.5%;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.container_card:hover{
+    cursor: pointer;
+}
+
+.pagination{
+    margin-left: 0;
+    padding-left: 0;
+}

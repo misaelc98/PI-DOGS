@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 
 //#00c1b5 Color celeste
 
-function landing() {
+function Landing() {
   return (
     <div className={style.containerPadre}>
       <div className={style.containerIzq}>
         <div className={style.containerIzqTop}>
-          <h1 className={style.titulo}> The PawPedia</h1>
+          <h1 className={style.titulo}>The PawPedia</h1>
         </div>
         <div className={style.containerIzqBottom}>
           <NavLink to="/home">
@@ -22,4 +22,4 @@ function landing() {
   );
 }
 
-export default landing;
+export default Landing;
