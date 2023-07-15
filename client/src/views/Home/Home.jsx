@@ -51,22 +51,22 @@ function Home() {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  const handleFilterByTemperament = (e) => {
-    e.preventDefault();
-    dispatch(FilterByTemperament(e.target.value));
-  };
+  // const handleFilterByTemperament = (e) => {
+  //   e.preventDefault();
+  //   dispatch(FilterByTemperament(e.target.value));
+  // };
 
-  const handleOrderByName = (e) => {
-    e.preventDefault();
-    dispatch(OrderByName(e.target.value));
-    setOrden(`Ordenado ${e.target.value}`);
-  };
+  // const handleOrderByName = (e) => {
+  //   e.preventDefault();
+  //   dispatch(OrderByName(e.target.value));
+  //   setOrden(`Ordenado ${e.target.value}`);
+  // };
 
-  const handleOrderByWeight = (e) => {
-    e.preventDefault();
-    dispatch(OrderByWeight(e.target.value));
-    setOrden(`Ordenado ${e.target.value}`);
-  };
+  // const handleOrderByWeight = (e) => {
+  //   e.preventDefault();
+  //   dispatch(OrderByWeight(e.target.value));
+  //   setOrden(`Ordenado ${e.target.value}`);
+  // };
 
   return (
     <div className={style.mainContainer}>
@@ -88,7 +88,7 @@ function Home() {
               //validacion que existan los datos
               return (
                 <div className={`${style.container_card}`} key={el.id}>
-                  <NavLink to={"/dog-detail/" + el.id}>
+                  <NavLink to={"/dogdetail/" + el.id}>
                     {
                       <Card
                         key={el.id}

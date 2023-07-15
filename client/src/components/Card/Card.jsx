@@ -5,8 +5,8 @@ export default function Card({
   image,
   name,
   temperaments,
-  weightMin,
-  weightMax,
+  weight
+  
 }) {
   return (
     <div className={style.main_container}>
@@ -24,7 +24,7 @@ export default function Card({
         ))}
       </div>
       <p>
-        Peso: {weightMin} - {weightMax}
+          {`${weight} - ${weight}`}
       </p>
     </div>
   );
