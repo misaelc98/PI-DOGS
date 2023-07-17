@@ -7,6 +7,7 @@ import Home from "./Views/Home/Home";
 import Header from "./components/Header/Header";
 import DogDetails from "./Views/Detail/Detail";
 import AddForm from "./components/AddForm/AddForm";
+import Cards from "./components/Cards/Cards";
 
 function App() {
 
@@ -16,15 +17,15 @@ function App() {
 
     <div className="App">
 
-      <Header />
+      
 
       <Routes>
 
         <Route path="/" element={<Landing />} />
 
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<> <Header /> <Home /> <Cards/> </>} />
 
-        <Route path="/dogdetail/:id" element={<DogDetails/>} />
+        <Route path="/dogs/:id" element={<> <Header/> <DogDetails/> </>} />
 
         <Route path="/dog" element={<AddForm/>} />
 

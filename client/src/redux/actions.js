@@ -61,24 +61,25 @@ export function OrderByWeight(payload) {
   };
 }
 
-export function showDogDetails(id) {
-  const endpoint = `${miApi}/dogs/${id}`;
-  return (dispatch) => {
-    axios(endpoint).then(({ data }) => {
-      return dispatch({
-        type: "SHOW_DETAILS",
-        payload: data,
-      });
-    });
-  };
-}
-
 export function postDog(payload) {
   return async function () {
     const data = await axios.post("http://localhost:3001/dog", payload);
     return data;
   };
 }
+
+ export function showDogDetails(id) {
+   const endpoint = `${miApi}/dogs/${id}`;
+   return (dispatch) => {
+     axios(endpoint).then(({ data }) => {
+       return dispatch({
+         type: "SHOW_DETAILS",
+         payload: data,
+       });
+    });
+   };
+ }
+
 
 // export function showDogDetails(id) {
 //   return async function (dispatch) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {
   getAllDogs,
   getTemperaments,
@@ -8,24 +9,14 @@ import {
   OrderByName,
   OrderByWeight,
 } from "../../redux/actions";
-import Card from "../../components/Card/Card";
 import Paginate from "../../components/Pager/Pager";
-import style from "../Home/Home.module.css";
-import { NavLink } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import Slider from "../../components/Galery/Slider";
-//#00c1b5 Color celeste
+
+import style from "../Home/Home.module.css";
+import Cards from "../../components/Cards/Cards";
 
 function Home() {
-  const imagesHome = [
-    "https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2069.jpg",
-    "https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2112.jpg",
-    "https://img.freepik.com/fotos-premium/funny-hipster-cute-dog-art-illustration-perros-antropomorficos_739548-2097.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEsymz8I3EPDTrJU-mhoAl0-L_IopXlVRfEDRb2rNudWfTT0nsjuV8Cwax3Dvdbnm980g",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTARRO-9pbyNQib4OzlWxLthxtZi8uIAqcXfne6Ngu3xqSkAZd89ztPvWDIV8LnbO-JXJo",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ30Ij5z1Pk9Se7tCTH4fo0mkGG9peNLePdtV6DCtdwIfap2F9XQExj7A2uVNLBozC0MmU",
-  ];
-
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //valores del estado global de redux que requiero
   const allTemperaments = useSelector((state) => state.temperaments);
@@ -51,72 +42,201 @@ function Home() {
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  // const handleFilterByTemperament = (e) => {
-  //   e.preventDefault();
-  //   dispatch(FilterByTemperament(e.target.value));
-  // };
+  const handleFilterByTemperament = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(FilterByTemperament(e.target.value));
+  };
 
-  // const handleOrderByName = (e) => {
-  //   e.preventDefault();
-  //   dispatch(OrderByName(e.target.value));
-  //   setOrden(`Ordenado ${e.target.value}`);
-  // };
+  const handleOrderByName = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(OrderByName(e.target.value));
+    setOrden(`Ordenado ${e.target.value}`);
+  };
 
-  // const handleOrderByWeight = (e) => {
-  //   e.preventDefault();
-  //   dispatch(OrderByWeight(e.target.value));
-  //   setOrden(`Ordenado ${e.target.value}`);
-  // };
+  const handleOrderByWeight = (e) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    dispatch(OrderByWeight(e.target.value));
+    setOrden(`Ordenado ${e.target.value}`);
+  };
+
+  const handleSearch = (e) => {
+    setCurrentPage(1);
+  };
 
   return (
-    <div className={style.mainContainer}>
-      <div className={style.topContainer}>
-        <Header />
-      </div>
-      <div className={style.bodyContainer}>
-        <div className={`${style.pagination}`}>
-          <Paginate
-            dogsPerPage={dogsPerPage}
-            allDogs={allDogs.length}
-            paginado={paginado}
-          />{" "}
-          {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
-        </div>
-        <div className={style.main_container}>
-          <div className={style.container_cards}>
-            {currentDogs?.map((el) => {
-              //validacion que existan los datos
-              return (
-                <div className={`${style.container_card}`} key={el.id}>
-                  <NavLink to={"/dogdetail/" + el.id}>
-                    {
-                      <Card
-                        key={el.id}
-                        image={el.image}
-                        name={el.name}
-                        temperaments={
-                          el.temperaments[0].name
-                            ? el.temperaments.map((el) => el.name)
-                            : el.temperaments
-                        }
-                      />
-                      //si temperaments viene en un formato distinto desde la BD
-                    }
-                  </NavLink>
-                </div>
-              );
-            })}
+    <div>
+      <div className={style.mainContainer}>
+        <div className={style.filterContainer}>
+          <div className={style.searchContainer}>
+            <SearchBar handleSearch={handleSearch} />
           </div>
+          <div className={style.filters}>
+            <div className={style.selectContainer}>
+              <select className={style.selectBox} onChange={handleOrderByName}>
+                <option disabled selected defaultValue>
+                  Alphabetical order
+                </option>
+                <option value="A-Z">A-Z</option>
+                <option value="Z-A">Z-A</option>
+              </select>
+              <div className={style.iconContainer}>
+                <i class="material-symbols-outlined">expand_more</i>
+              </div>
+            </div>
+            <div className={style.selectContainer}>
+              <select
+                className={style.selectBox}
+                onChange={handleOrderByWeight}
+              >
+                <option disabled selected defaultValue>
+                  Filter by weight
+                </option>
+                <option value="max_weight">Max</option>
+                <option value="min_weight">Min</option>
+              </select>
+              <div className={style.iconContainer}>
+                <i class="material-symbols-outlined">expand_more</i>
+              </div>
+            </div>
+            <div className={style.selectContainer}>
+              <select
+                className={style.selectBox}
+                onChange={handleFilterByTemperament}
+              >
+                <option disabled selected defaultValue>
+                  Temperaments
+                </option>
+                <option value="Todos">All</option>
+                {allTemperaments?.map((temp) => (
+                  <option value={temp.name} key={temp.id}>
+                    {temp.name}
+                  </option>
+                ))}
+              </select>
+              <div className={style.iconContainer}>
+                <i class="material-symbols-outlined">expand_more</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={style.bodyContainer}>
+          <div className={style.cardsRender}>
+            <Cards 
+            currentDogs={currentDogs}
+            />
+          </div>
+          <div className={style.pagination}>
+            <Paginate
+              dogsPerPage={dogsPerPage}
+              allDogs={allDogs.length}
+              paginado={paginado}
+            />{" "}
+            {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
+          </div>
+
+          {/* <Footer/> */}
         </div>
       </div>
     </div>
+
+    //
+    //         <div className={`${style.header_container_left}`}>
+
+    //           <div className={`${style.header_left}`}>
+    //             <SearchBar handleSearch={handleSearch} />
+
+    //             <div className={`${style.container_filters}`}>
+    //               <select onChange={handleOrderByName}>
+    //                 <option disabled selected defaultValue>
+    //                   Alphabetical order
+    //                 </option>
+    //                 <option value="A-Z">A-Z</option>
+    //                 <option value="Z-A">Z-A</option>
+    //               </select>
+
+    //               <select onChange={handleOrderByWeight}>
+    //                 <option disabled selected defaultValue>
+    //                   Filter by weight
+    //                 </option>
+    //                 <option value="max_weight">Max</option>
+    //                 <option value="min_weight">Min</option>
+    //               </select>
+
+    //               <select onChange={handleFilterByTemperament}>
+    //                 <option disabled selected defaultValue>
+    //                   Temperaments
+    //                 </option>
+    //                 <option value="Todos">All</option>
+    //                 {allTemperaments?.map((temp) => (
+    //                   <option value={temp.name} key={temp.id}>
+    //                     {temp.name}
+    //                   </option>
+    //                 ))}
+    //               </select>
+    //             </div>
+    //           </div>
+    //         </div>
+    //         {/* boton para agregar nuevos perros */}
+    //         <div className={`${style.header_right}`}>
+    //           <NavLink to="/dog">
+    //             <button className={`${style.button_add_dog}`}>CREATE DOG</button>
+    //           </NavLink>
+    //         </div>
+    //       </Header>
+
+    //       <hr />
+
+    //       <div className={style.main_container}>
+    //         <div className={style.container_cards}>
+    //           {currentDogs?.map((el) => {
+    //             //validacion que existan los datos
+    //             return (
+    //               <div className={`${style.container_card}`} key={el.id}>
+    //                 <NavLink to={"/dogs/" + el.id}>
+    //                   {
+    //                     <Card
+    //                       key={el?.id}
+    //                       image={el?.image}
+    //                       name={el?.name}
+    //                       weightMin={el?.weightMin}
+    //                       weightMax={el?.weightMax}
+    //                       temperaments={
+    //                         el?.temperaments.name
+    //                           ? el.temperaments.map((el) => el.name)
+    //                           : el.temperaments
+    //                       }
+    //                     />
+    //                     //si temperaments viene en un formato distinto desde la BD
+    //                   }
+    //                 </NavLink>
+    //               </div>
+    //             );
+    //           })}
+    //         </div>
+    //         <div className={`${style.pagination}`}>
+    //           <Paginate
+    //             dogsPerPage={dogsPerPage}
+    //             allDogs={allDogs.length}
+    //             paginado={paginado}
+    //           />{" "}
+    //           {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
+    //         </div>
+    //       </div>
+    //     </>
   );
 }
 
 export default Home;
 
-{
-  /* <div className={style.leftBody}>
-          <Slider images={imagesHome} />
-        </div> */
-}
+// <div className={style.leftBody}>
+//           <Slider />
+//         </div>
+//         <div className={style.rightBody}>
+//           <h3>¿LISTO?</h3>
+//           <NavLink to="/home">
+//             <button>FIND YOUR NEXT DOG</button>
+//           </NavLink>
+//         </div>

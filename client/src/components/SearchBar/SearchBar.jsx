@@ -1,28 +1,32 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getBreed } from "../../redux/actions/";
-import style from "../SearchBar/SearchBar.module.css";
+import { getBreed } from "../../redux/actions";
+import style from "./SearchBar.module.css";
 
-export default function SearchBar() {
-    const dispatch = useDispatch();
-    const [searchDog, setSearchDog] = useState("");
+export default function SearchBar({ handleSearch }) {
+  const dispatch = useDispatch();
+  const [searchDog, setSearchDog] = useState("");
 
-    const handleInput = (e) => {
-        e.preventDefault()
-        setSearchDog(e.target.value)
-    }
+  const handleInput = (e) => {
+    e.preventDefault();
+    setSearchDog(e.target.value);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(getBreed(searchDog));
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getBreed(searchDog));
+    handleSearch(searchDog);
+  };
 
-    return(
-        <div className={style.searchbar_container}>
-            <input className={`${style.searchbar}`} type="text" onChange={handleInput} placeholder="Search..."/>
-            <button className={`${style.searchbar_button}`} type="submit" onClick={handleSubmit}>
-                <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
-    )
+  return (
+    <div className={style.container}>
+      <input
+        className={style.input}
+        type="text"
+        onChange={handleInput}
+        placeholder="Search..."
+      />
+      <button type="submit" onClick={handleSubmit} className={style.button}>SEARCH</button>
+    </div>
+  );
 }

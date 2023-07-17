@@ -1,9 +1,10 @@
-import style from "./Landing.module.css";
+import React from "react";
 import { NavLink } from "react-router-dom";
+import style from "./Landing.module.css";
 
 //#00c1b5 Color celeste
 
-function Landing() {
+function LandingPage() {
   return (
     <div className={style.containerPadre}>
       <div className={style.containerIzq}>
@@ -22,4 +23,4 @@ function Landing() {
   );
 }
 
-export default Landing;
+export default LandingPage;

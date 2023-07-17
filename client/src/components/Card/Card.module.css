@@ -1,63 +1,87 @@
-a{
-    text-decoration: none;
-    
+.cardContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #0d3b66;
+  opacity: 0.85;
+  width: 85%;
+  height: 40vh;
+  border-style: inset;
+  border: 9px solid rgb(50, 110, 240);
+  padding: 12px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  transition: filter 0.3s ease;
+  justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
-.main_container{
-    font-size: 0.7rem;
-    text-decoration: none;
-    max-height: 50vh;
-    overflow: hidden;
-    color: #575025;
-    position: relative;
+.cardContainer:hover {
+  border: 9px solid #ddce11;
+  backdrop-filter:blur(5px); /* Aplica el oscurecimiento y el desenfoque en el estado de hover */
 }
 
-.main_container:hover{
- /* cursor: pointer; */
+.cardContainer.hovered {
+  transform: scale(1.05);
 }
 
-.main_container::before{
-    content: "";
-    position: absolute;
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
-.main_container:hover::before{
-    content: "Details";
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 2.2rem;
-    left: 0%;
-    background-color: rgba(153, 153, 153, 0.5);
+.dogImage {
+  width: 100%; /* Modifica el ancho de la imagen para que ocupe toda la tarjeta */
+  height: 100%; /* Modifica la altura de la imagen para que ocupe toda la tarjeta */
+  opacity: 1;
+  transition: filter 0.2s ease;
 }
 
-.image_container{
-    height: 29vh;
-    border-radius: 7px;
+.details {
+  position: absolute;
+  height: 95%;
+  width: 95%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px;
+  transition: opacity 0.2s ease;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.image_container img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.cardContainer:hover .details {
+  opacity: 1;
 }
 
-.img{
-    
+.name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.main_container h2{
-    color: white;
+.temperament {
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
-.temperaments_container{ /*que hermoso es grid*/
-    text-decoration: none;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0 0.7rem;
+.tempContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  margin-bottom: 5px;
+}
+.tempContainer h3 {
+  font-size: 20px;
+  margin: 0 5px;
 }
 
-.temperaments_container h3{
-    margin: 0 0.3rem 0.4rem 0.3rem;
+p {
+  font-size: 20px;
+  margin: 0;
 }

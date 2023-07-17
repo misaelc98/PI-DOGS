@@ -42,11 +42,13 @@ const rootReducer = (state = intialState, action) => {
         ...state,
         dogs: filteredDogs,
       };
+      
     case "GET_BREED":
       return {
         ...state,
         dogs: action.payload,
       };
+
     case "ORDER_BY_NAME":
       const sortedName =
         action.payload === "A-Z"
@@ -77,19 +79,19 @@ const rootReducer = (state = intialState, action) => {
       const sortedWeight =
         action.payload === "min_weight"
           ? state.allDogs.sort((a, b) => {
-              if (parseInt(a.weight[1]) > parseInt(b.weight[1])) {
+              if (parseInt(a.weightMin) > parseInt(b.weightMin)) {
                 return 1;
               }
-              if (parseInt(b.weight[1]) > parseInt(a.weight[1])) {
+              if (parseInt(b.weightMin) > parseInt(a.weightMin)) {
                 return -1;
               }
               return 0;
             })
           : state.allDogs.sort((a, b) => {
-              if (parseInt(a.weight[1]) > parseInt(b.weight[1])) {
+              if (parseInt(a.weightMax) > parseInt(b.weightMax)) {
                 return -1;
               }
-              if (parseInt(b.weight[1]) > parseInt(a.weight[1])) {
+              if (parseInt(b.weightMax) > parseInt(a.weightMax)) {
                 return 1;
               }
               return 0;
@@ -98,6 +100,7 @@ const rootReducer = (state = intialState, action) => {
         ...state,
         dogs: sortedWeight,
       };
+
     case "SHOW_DETAILS":
       let myDetails = action.payload;
       if (myDetails.temperaments.length === 0) {
