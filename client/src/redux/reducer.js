@@ -1,14 +1,27 @@
+import {
+  GET_ALL_DOGS,
+  FILTER_BY_ORIGIN,
+  GET_TEMPERAMENTS,
+  GET_FILTER_TEMPERAMENTS,
+  GET_BREED,
+  ORDER_BY_WEIGHT,
+  RESET_FILTERS,
+  CLEAN_DETAIL,
+  SET_LOADING,
+  SET_PAGE
+} from "./actions";
+
 const initialState = {
   dogs: [],
   temperaments: [],
   allDogs: [],
-  copyAllDogs: [],
   details: [],
+  loading: true,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "GET_ALL_DOGS":
+    case GET_ALL_DOGS:
       action.payload.forEach((element) => {
         if (!element.temperaments) {
           element.temperaments = "no-temperaments";
@@ -20,14 +33,14 @@ const rootReducer = (state = initialState, action) => {
         allDogs: action.payload,
       };
 
-    case "GET_TEMPERAMENTS":
+    case GET_TEMPERAMENTS:
       const filteredTemp = action.payload.filter((temp) => temp.name !== "");
       return {
         ...state,
         temperaments: filteredTemp,
       };
 
-    case "GET_FILTER_TEMPERAMENTS":
+    case GET_FILTER_TEMPERAMENTS:
       const allDogs = state.allDogs;
       let filteredDogs = [];
       if (action.payload === "Todos") {
@@ -45,7 +58,16 @@ const rootReducer = (state = initialState, action) => {
         dogs: filteredDogs,
       };
 
-    case "FILTER_BY_ORIGIN":
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+
+    case SET_PAGE:
+      return { ...state, currentPage: action.payload };
+
+    case FILTER_BY_ORIGIN:
       if (action.payload === "All") {
         return {
           ...state,
@@ -65,17 +87,17 @@ const rootReducer = (state = initialState, action) => {
         }
       }
 
-    case "RESET_FILTERS":
+    case RESET_FILTERS:
       return initialState;
 
-    case "CLEAN_DETAIL":
+    case CLEAN_DETAIL:
       return {
         ...state,
         details: [],
         loading: false,
       };
 
-    case "GET_BREED":
+    case GET_BREED:
       return {
         ...state,
         dogs: action.payload,
@@ -107,13 +129,13 @@ const rootReducer = (state = initialState, action) => {
         dogs: sortedName,
       };
 
-    case "FILTER_BY_ORIGIN":
+    case FILTER_BY_ORIGIN:
       return {
         ...state,
         origenPerros: action.payload,
       };
 
-    case "ORDER_BY_WEIGHT":
+    case ORDER_BY_WEIGHT:
       const sortedWeight =
         action.payload === "min_weight"
           ? state.allDogs.sort((a, b) => {

@@ -1,4 +1,5 @@
 import "./App.css";
+import { getAllDogs, getTemperaments } from "./redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -11,26 +12,43 @@ import Cards from "./components/Cards/Cards";
 
 function App() {
 
-// enctype = multipart/form-data PARA PODER CARGAR LA IMAGEN
+  const dispatch = useDispatch();
+
+  //Montaje y acciones despachadas
+  useEffect(() => {
+    dispatch(getAllDogs());
+    dispatch(getTemperaments());
+  }, [dispatch]);
+
+  // enctype = multipart/form-data PARA PODER CARGAR LA IMAGEN
 
   return (
-
     <div className="App">
-
-      
-
       <Routes>
-
         <Route path="/" element={<Landing />} />
 
-        <Route path="/home" element={<> <Header /> <Home /> <Cards/> </>} />
+        <Route
+          path="/home"
+          element={
+            <>
+              {" "}
+              <Header /> <Home /> <Cards />{" "}
+            </>
+          }
+        />
 
-        <Route path="/dogs/:id" element={<> <Header/> <DogDetails/> </>} />
+        <Route
+          path="/dogs/:id"
+          element={
+            <>
+              {" "}
+              <Header /> <DogDetails />{" "}
+            </>
+          }
+        />
 
-        <Route path="/dog" element={<AddForm/>} />
-
+        <Route path="/dog" element={<AddForm />} />
       </Routes>
-
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function SearchBar({ handleSearch }) {
         onChange={handleInput}
         placeholder="Search..."
       />
-      <button type="submit" onClick={handleSubmit} className={style.button}>SEARCH</button>
+      <button type="submit" onClick={handleSubmit} className={style.btn}>SEARCH</button>
     </div>
   );
 }

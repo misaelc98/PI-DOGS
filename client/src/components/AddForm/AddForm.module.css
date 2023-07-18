@@ -1,8 +1,67 @@
-.main_wrapper{
-    display: flex;
-    justify-content: center;
+.mainContainer {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+  box-shadow: 0 2px 0 2px #000;
 }
 
+.formbox {
+  left: 15%;
+  top: 10%;
+  position: relative;
+  display: flex;
+  width: 70%;
+  height: 80%;
+  justify-content: center;
+  align-items: center;
+  background-color: aqua;
+  border-radius: 15px;
+}
+
+.form {
+  display: flex;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.nameContainer {
+  display: flex;
+  position: relative;
+  top: 0;
+  width: 20%;
+  height: 10%;
+  background-color: transparent;
+}
+
+.inputname {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0.2em;
+  padding: 1.1em 1.3em;
+  background: none;
+  border: 2px solid #fff;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-radius: 12px;
+  width: 100%;
+  background-color: #0d3b66;
+  font-weight: bolder;
+  box-shadow: 0 2px 0 2px #000;
+}
+.inputname .placeholder{
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* 
 .container{
     width: 40%;
 }
@@ -133,9 +192,6 @@ form{
     justify-items: center;
 }
 
-.container_button_add_dog{
-    /* background-color: red */
-}
 
 .button_add_dog{
     font-size: 1rem;
@@ -176,4 +232,48 @@ form{
     font-size: 2rem;
     left: 0%;
     background-color: rgba(153, 153, 153, 0.5);
-}
+} */
+/* 
+.btn {
+    width: 40%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.2em;
+    background: none;
+    border: 2px solid #fff;
+    font-size: 17px;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    border-radius: 0 12px 12px 0;
+    background-color: #e5053a;
+    font-weight: bolder;
+    box-shadow: 0 2px 0 2px #000;
+   }
+   
+   .btn:before {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 120%;
+    background-color: #0d3b66 ;
+    top: 50%;
+    transform: skewX(30deg) translate(-150%, -50%);
+    transition: all 0.5s;
+   }
+   
+   .btn:hover {
+    background-color: #ddce11;
+    color: #131313;
+    box-shadow: 0 2px 0 2px #0d3b66;
+   }
+   
+   .btn:hover::before {
+    transform: skewX(30deg) translate(280%, -50%);
+    transition-delay: 0.1s;
+   }
+   
+   .btn:active {
+    transform: scale(0.9);
+   } */

@@ -2,6 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import Paginate from "../../components/Pager/Pager";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import Slider from "../../components/Galery/Slider";
+import style from "../Home/Home.module.css";
+import Cards from "../../components/Cards/Cards";
+import Loading from "../../components/Loading/Loading";
 import {
   getAllDogs,
   getTemperaments,
@@ -11,14 +17,9 @@ import {
   OrderByWeight,
   resetFilters,
 } from "../../redux/actions";
-import Paginate from "../../components/Pager/Pager";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import Slider from "../../components/Galery/Slider";
-
-import style from "../Home/Home.module.css";
-import Cards from "../../components/Cards/Cards";
 
 function Home() {
+  
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //valores del estado global de redux que requiero
   const allTemperaments = useSelector((state) => state.temperaments);
@@ -26,6 +27,8 @@ function Home() {
   const [filterTemperament, setFilterTemperament] = useState();
   const [name, setName] = useState();
   const [filterOrigin, setFilterOrigin] = useState();
+
+  //Logica paginado
   const [currentPage, setCurrentPage] = useState(1);
   const dogsPerPage = 8;
   const lastIndex = currentPage * dogsPerPage;
@@ -38,12 +41,10 @@ function Home() {
     setCurrentPage(pageNumber);
   };
 
-  useEffect(() => {
-    //acciones a depachar luego de montar el componente
-    dispatch(getAllDogs());
-    dispatch(getTemperaments());
-  }, [dispatch]);
 
+
+
+  //
   function handleFilterOrigin(e) {
     const selectedFilter = e.target.value;
     setFilterOrigin(selectedFilter);
@@ -64,6 +65,7 @@ function Home() {
     setCurrentPage(1);
   }
 
+  //Busqueda por nombre de los perros y reseteo de los filtros
   function handleOrderByName(e) {
     const selectedOrder = e.target.value;
     setOrder(selectedOrder);
@@ -72,6 +74,7 @@ function Home() {
     setCurrentPage(1);
   }
 
+  
   function handleOrderByWeight(e) {
     const selectedOrder = e.target.value;
     setOrder(selectedOrder);
@@ -79,10 +82,12 @@ function Home() {
     setCurrentPage(1);
   }
 
+  //Manejo de la busqueda
   const handleSearch = (e) => {
     setCurrentPage(1);
   };
 
+  //Reseteo los estados y filtros
   const handleResetFilters = () => {
     dispatch(resetFilters());
     dispatch(getAllDogs());
@@ -92,19 +97,25 @@ function Home() {
     setCurrentPage(1);
   };
 
+  const loading = useSelector((state) => state.loading);
+
   return (
     <div>
+      {loading && <Loading />}
       <div className={style.mainContainer}>
         <div className={style.filterContainer}>
           <div className={style.searchContainer}>
             <SearchBar handleSearch={handleSearch} />
             <div className={style.selectContainer}>
-              <button className={style.btn} onClick={handleResetFilters}>RESET</button>
+              <button className={style.btn} onClick={handleResetFilters}>
+                RESET
+              </button>
             </div>
           </div>
           <div className={style.filters}>
             <div className={style.selectContainer}>
-              <select className={style.selectBox1}
+              <select
+                className={style.origin}
                 name="Filter_Origin"
                 value={filterOrigin}
                 onChange={handleFilterOrigin}
@@ -115,39 +126,33 @@ function Home() {
               </select>
             </div>
             <div className={style.selectContainer}>
-              <select className={style.selectBox2} onChange={handleOrderByName}>
+              <select className={style.alphabetic} onChange={handleOrderByName}>
                 <option disabled selected defaultValue>
-                  Alphabetical order
+                  ALPHABETICAL
                 </option>
                 <option value="A-Z">A-Z</option>
                 <option value="Z-A">Z-A</option>
               </select>
-              <div className={style.iconContainer}>
-                <i class="material-symbols-outlined">expand_more</i>
-              </div>
             </div>
             <div className={style.selectContainer}>
               <select
-                className={style.selectBox3}
+                className={style.weight}
                 onChange={handleOrderByWeight}
               >
                 <option disabled selected defaultValue>
-                  Filter by weight
+                  WEIGHT
                 </option>
                 <option value="max_weight">Max</option>
                 <option value="min_weight">Min</option>
               </select>
-              <div className={style.iconContainer}>
-                <i class="material-symbols-outlined">expand_more</i>
-              </div>
             </div>
             <div className={style.selectContainer}>
               <select
-                className={style.selectBox4}
+                className={style.temperaments}
                 onChange={handleFilterByTemperament}
               >
                 <option disabled selected defaultValue>
-                  Temperaments
+                  TEMPERAMENTS
                 </option>
                 <option value="Todos">All</option>
                 {allTemperaments?.map((temp) => (
@@ -156,9 +161,6 @@ function Home() {
                   </option>
                 ))}
               </select>
-              <div className={style.iconContainer}>
-                <i class="material-symbols-outlined">expand_more</i>
-              </div>
             </div>
           </div>
         </div>

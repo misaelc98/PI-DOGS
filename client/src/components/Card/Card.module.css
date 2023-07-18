@@ -3,28 +3,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #0d3b66;
+  background-image: linear-gradient(rgba(239, 71, 110, 0.399), #992edb76 );
   opacity: 0.85;
   width: 85%;
   height: 40vh;
   border-style: inset;
-  border: 9px solid rgb(50, 110, 240);
-  padding: 12px;
+  border: 9px solid rgb(0,0,0);
+  padding: 20px;
   cursor: pointer;
   color: white;
   text-decoration: none;
   transition: filter 0.3s ease;
   justify-content: center;
-  margin-bottom: 12px;
-  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 0 2px #000;
 }
+
+/* .color1 { #565175 };
+.color2 { #538a95 };
+.color3 { #67b79e };
+.color4 { #ffb727 };
+.color5 { #e4491c }; */
 
 .cardContainer:hover {
-  border: 9px solid #ddce11; /* Aplica el oscurecimiento y el desenfoque en el estado de hover */
-}
-
-.cardContainer.hovered {
-  transform: scale(1.05);
+  border: 9px solid crimson; /* Aplica el oscurecimiento y el desenfoque en el estado de hover */
 }
 
 .imageContainer {
@@ -81,8 +83,6 @@
   font-size: 18px;
   margin: 0 5px;
 }
-
-
 
 .peso{
   font-size: 20px;

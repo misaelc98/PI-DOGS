@@ -3,12 +3,12 @@
   height: 95%;
   width: 100%;
   display: flex;
-  background-color: #ddce11;
+  background-color: rgb(237, 96, 8);
 }
 
 .boxImage {
   position: relative;
-  left: 10%;
+  left: 2%;
   width: 50%;
   height: 70%;
   background-color: aqua;
@@ -28,10 +28,10 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   position: relative;
-  margin-left: 10%;
+  margin-left: 2%;
   width: 30%;
   height: 70%;
-  background-color: rgb(237, 96, 8);
+  background-color: #ddce11;
   border-radius: 0 15px 15px 0;
   box-shadow: rgba(0, 0, 0, 0.22) 0px 15px 12px;
   margin-top: 4%;
@@ -68,4 +68,27 @@
 }
 .props{
     font-size: 20px;
+}
+
+.navlink{
+  position: relative;
+  display: flex;
+  text-decoration: none;
+  right: -5%;
+  top: -1%;
+  background-color: transparent;
+  z-index: 0;
+  
+  height: 10%;
+  
+}
+
+.arrow{
+  height: 10%;
+  display: flex;
+  position: relative;
+  color: black;
+  font-weight: 100;
+  font-size: 150px;
+  
 }
