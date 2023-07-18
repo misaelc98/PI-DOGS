@@ -1,18 +1,19 @@
 const { dataDogs } = require("../controllers/getDog");
 
-
-const dogsByName = async (req, res) => {
-  const { name } = req.query;
-  const perros = await dataDogs();
-  if (name) {
-    const dog = perros.filter((d) =>
-      d.name.toLowerCase().includes(name.toLowerCase())
-    );
-    dog.length ? res.status(200).send(dog) : res.status(404).send("Dog not found");
-  } else {
-    res.status(200).send(perros);
-  }
-};
+  const dogsByName = async (req, res) => {
+    const { name } = req.query;
+    const perros = await dataDogs();
+    if (name) {
+      const dog = perros.filter((d) => 
+        d.name.toLowerCase().includes(name.toLowerCase())
+      );
+      dog.length
+        ? res.status(200).send(dog)
+        : res.status(404).send("Dog not found");
+    } else{
+      res.status(200).send(perros);
+    }
+  };
 
 module.exports = {
   dogsByName,

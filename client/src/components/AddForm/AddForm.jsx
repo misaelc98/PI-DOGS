@@ -7,22 +7,22 @@ import { getTemperaments, postDog } from "../../redux/actions";
 import style from "./AddForm.module.css";
 
 const validate = (form) => {
-  let errors = {}
-  if(!form.name) {
-      errors.name = "Name is required, it should not contain numbers"
+  let errors = {};
+  if (!form.name) {
+    errors.name = "Name is required, it should not contain numbers";
   }
-  if(!form.heightMin || !form.heightMax) {
-      errors.height = "Height is required"
+  if (!form.heightMin || !form.heightMax) {
+    errors.height = "Height is required";
   }
-  if(!form.weightMin || !form.weightMax) {
-      errors.weight = "Weight is required"
+  if (!form.weightMin || !form.weightMax) {
+    errors.weight = "Weight is required";
   }
-  if(!form.life_span) {
-      errors.life_span = "Lifespan is required, type only numbers separated by a dash (-)"
+  if (!form.life_span) {
+    errors.life_span =
+      "Lifespan is required, type only numbers separated by a dash (-)";
   }
-  return errors
-}
-
+  return errors;
+};
 
 export default function FormAddDog() {
   const dispatch = useDispatch();
@@ -85,7 +85,7 @@ export default function FormAddDog() {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value, 
+      [e.target.name]: e.target.value,
     });
     setErrors(
       validate({
@@ -222,11 +222,7 @@ export default function FormAddDog() {
                 Temperaments
               </option>
               {temperaments.map((d) => (
-                <option
-                  value={d.name}
-                  key={d.name + Math.random()}
-                  className={style.option_temperament}
-                >
+                <option value={d.name} className={style.option_temperament}>
                   {d.name}
                 </option> //key de elementos de temperamentos, eliminar el repetido reserved
               ))}

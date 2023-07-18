@@ -42,7 +42,12 @@ const rootReducer = (state = intialState, action) => {
         ...state,
         dogs: filteredDogs,
       };
-      
+    case "CLEAN_DETAIL":
+      return {
+        ...state,
+        details: [],
+        loading: false,
+      };
     case "GET_BREED":
       return {
         ...state,

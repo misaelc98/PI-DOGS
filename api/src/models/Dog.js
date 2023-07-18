@@ -32,16 +32,11 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      lifeSpan: {
-        field: "life_span",
+      life_span: {
         type: DataTypes.STRING,
         allowNull: true,
       },
       image: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      bredFor: {
         type: DataTypes.STRING,
         allowNull: true,
       },

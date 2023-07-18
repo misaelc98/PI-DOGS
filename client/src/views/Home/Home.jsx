@@ -62,6 +62,7 @@ function Home() {
     setOrden(`Ordenado ${e.target.value}`);
   };
 
+
   const handleSearch = (e) => {
     setCurrentPage(1);
   };
@@ -142,90 +143,6 @@ function Home() {
       </div>
     </div>
 
-    //
-    //         <div className={`${style.header_container_left}`}>
-
-    //           <div className={`${style.header_left}`}>
-    //             <SearchBar handleSearch={handleSearch} />
-
-    //             <div className={`${style.container_filters}`}>
-    //               <select onChange={handleOrderByName}>
-    //                 <option disabled selected defaultValue>
-    //                   Alphabetical order
-    //                 </option>
-    //                 <option value="A-Z">A-Z</option>
-    //                 <option value="Z-A">Z-A</option>
-    //               </select>
-
-    //               <select onChange={handleOrderByWeight}>
-    //                 <option disabled selected defaultValue>
-    //                   Filter by weight
-    //                 </option>
-    //                 <option value="max_weight">Max</option>
-    //                 <option value="min_weight">Min</option>
-    //               </select>
-
-    //               <select onChange={handleFilterByTemperament}>
-    //                 <option disabled selected defaultValue>
-    //                   Temperaments
-    //                 </option>
-    //                 <option value="Todos">All</option>
-    //                 {allTemperaments?.map((temp) => (
-    //                   <option value={temp.name} key={temp.id}>
-    //                     {temp.name}
-    //                   </option>
-    //                 ))}
-    //               </select>
-    //             </div>
-    //           </div>
-    //         </div>
-    //         {/* boton para agregar nuevos perros */}
-    //         <div className={`${style.header_right}`}>
-    //           <NavLink to="/dog">
-    //             <button className={`${style.button_add_dog}`}>CREATE DOG</button>
-    //           </NavLink>
-    //         </div>
-    //       </Header>
-
-    //       <hr />
-
-    //       <div className={style.main_container}>
-    //         <div className={style.container_cards}>
-    //           {currentDogs?.map((el) => {
-    //             //validacion que existan los datos
-    //             return (
-    //               <div className={`${style.container_card}`} key={el.id}>
-    //                 <NavLink to={"/dogs/" + el.id}>
-    //                   {
-    //                     <Card
-    //                       key={el?.id}
-    //                       image={el?.image}
-    //                       name={el?.name}
-    //                       weightMin={el?.weightMin}
-    //                       weightMax={el?.weightMax}
-    //                       temperaments={
-    //                         el?.temperaments.name
-    //                           ? el.temperaments.map((el) => el.name)
-    //                           : el.temperaments
-    //                       }
-    //                     />
-    //                     //si temperaments viene en un formato distinto desde la BD
-    //                   }
-    //                 </NavLink>
-    //               </div>
-    //             );
-    //           })}
-    //         </div>
-    //         <div className={`${style.pagination}`}>
-    //           <Paginate
-    //             dogsPerPage={dogsPerPage}
-    //             allDogs={allDogs.length}
-    //             paginado={paginado}
-    //           />{" "}
-    //           {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
-    //         </div>
-    //       </div>
-    //     </>
   );
 }
 

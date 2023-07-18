@@ -79,6 +79,15 @@ export function postDog(payload) {
     });
    };
  }
+ 
+ export const  cleanDetail = () => {
+  return (dispatch) => {
+      return dispatch({
+        type: "CLEAN_DETAIL",
+        payload: [], 
+      });
+  };
+}
 
 
 // export function showDogDetails(id) {

@@ -14,7 +14,9 @@ export default function Paginate({ dogsPerPage, allDogs, paginado }) {
             <ul className={`${style.ul_container}`}>
                 { pageNumbers && pageNumbers.map(number => (
                     <li className={`${style.li_container}`} onClick={() => paginado(number)} key={number}>
+                    
                          <button type="button">{number}</button> 
+                    
                     </li>
                 ))}
             </ul>

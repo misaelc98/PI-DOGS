@@ -28,14 +28,14 @@ const Card = ({ image, name, temperaments, weightMin, weightMax }) => {
       </div>
       <div className={style.details}>
         <h2 className={style.name}>{name}</h2>
-        <h2 className={style.temperament}>Temperaments</h2>
+        <h2 className={style.temperament}>TEMPERAMENTS</h2>
         <div className={style.tempContainer}>
           {temperaments.map((temps) => (
             <h3>{temps}</h3>
           ))}
         </div>
-        <p>
-          {`${weightMin}`} - {`${weightMax}`}
+        <p className={style.peso}>
+          {`WEIGHT: ${weightMin}`} - {`${weightMax}`} KG
         </p>
       </div>
     </div>
