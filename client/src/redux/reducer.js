@@ -1,16 +1,17 @@
-const intialState = {
+const initialState = {
   dogs: [],
   temperaments: [],
   allDogs: [],
+  copyAllDogs: [],
   details: [],
 };
 
-const rootReducer = (state = intialState, action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ALL_DOGS":
       action.payload.forEach((element) => {
-        if (!element.temperaments[0]) {
-          element.temperaments[0] = "no-temperaments";
+        if (!element.temperaments) {
+          element.temperaments = "no-temperaments";
         }
       });
       return {
@@ -18,6 +19,7 @@ const rootReducer = (state = intialState, action) => {
         dogs: action.payload,
         allDogs: action.payload,
       };
+
     case "GET_TEMPERAMENTS":
       const filteredTemp = action.payload.filter((temp) => temp.name !== "");
       return {
@@ -42,12 +44,37 @@ const rootReducer = (state = intialState, action) => {
         ...state,
         dogs: filteredDogs,
       };
+
+    case "FILTER_BY_ORIGIN":
+      if (action.payload === "All") {
+        return {
+          ...state,
+          dogs: state.allDogs,
+        };
+      } else {
+        if (action.payload === "BD") {
+          return {
+            ...state,
+            dogs: state.allDogs.filter((dog) => isNaN(dog.id) === true),
+          };
+        } else {
+          return {
+            ...state,
+            dogs: state.allDogs.filter((dog) => isNaN(dog.id) === false),
+          };
+        }
+      }
+
+    case "RESET_FILTERS":
+      return initialState;
+
     case "CLEAN_DETAIL":
       return {
         ...state,
         details: [],
         loading: false,
       };
+
     case "GET_BREED":
       return {
         ...state,
@@ -78,6 +105,12 @@ const rootReducer = (state = intialState, action) => {
       return {
         ...state,
         dogs: sortedName,
+      };
+
+    case "FILTER_BY_ORIGIN":
+      return {
+        ...state,
+        origenPerros: action.payload,
       };
 
     case "ORDER_BY_WEIGHT":

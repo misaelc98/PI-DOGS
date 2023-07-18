@@ -6,8 +6,10 @@ import {
   getAllDogs,
   getTemperaments,
   FilterByTemperament,
+  filterByOrigin,
   OrderByName,
   OrderByWeight,
+  resetFilters,
 } from "../../redux/actions";
 import Paginate from "../../components/Pager/Pager";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -20,7 +22,10 @@ function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.dogs); //valores del estado global de redux que requiero
   const allTemperaments = useSelector((state) => state.temperaments);
-
+  const [order, setOrder] = useState("");
+  const [filterTemperament, setFilterTemperament] = useState();
+  const [name, setName] = useState();
+  const [filterOrigin, setFilterOrigin] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const dogsPerPage = 8;
   const lastIndex = currentPage * dogsPerPage;
@@ -33,37 +38,57 @@ function Home() {
     setCurrentPage(pageNumber);
   };
 
-  // eslint-disable-next-line
-  const [orden, setOrden] = useState("");
-
   useEffect(() => {
     //acciones a depachar luego de montar el componente
     dispatch(getAllDogs());
     dispatch(getTemperaments());
   }, [dispatch]);
 
-  const handleFilterByTemperament = (e) => {
-    e.preventDefault();
+  function handleFilterOrigin(e) {
+    const selectedFilter = e.target.value;
+    setFilterOrigin(selectedFilter);
+    setFilterTemperament("All");
+    setName("");
+    dispatch(FilterByTemperament("All"));
+    dispatch(filterByOrigin(selectedFilter));
     setCurrentPage(1);
-    dispatch(FilterByTemperament(e.target.value));
-  };
+  }
 
-  const handleOrderByName = (e) => {
-    e.preventDefault();
+  function handleFilterByTemperament(e) {
+    const selectedFilter = e.target.value;
+    setFilterTemperament(selectedFilter);
+    setFilterOrigin("All");
+    setName("");
+    dispatch(filterByOrigin("All"));
+    dispatch(FilterByTemperament(selectedFilter));
     setCurrentPage(1);
-    dispatch(OrderByName(e.target.value));
-    setOrden(`Ordenado ${e.target.value}`);
-  };
+  }
 
-  const handleOrderByWeight = (e) => {
-    e.preventDefault();
+  function handleOrderByName(e) {
+    const selectedOrder = e.target.value;
+    setOrder(selectedOrder);
+    dispatch(OrderByName(selectedOrder));
+    dispatch(filterByOrigin("All"));
     setCurrentPage(1);
-    dispatch(OrderByWeight(e.target.value));
-    setOrden(`Ordenado ${e.target.value}`);
-  };
+  }
 
+  function handleOrderByWeight(e) {
+    const selectedOrder = e.target.value;
+    setOrder(selectedOrder);
+    dispatch(OrderByWeight(selectedOrder));
+    setCurrentPage(1);
+  }
 
   const handleSearch = (e) => {
+    setCurrentPage(1);
+  };
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters());
+    dispatch(getAllDogs());
+    dispatch(getTemperaments());
+    dispatch(FilterByTemperament("All"));
+    dispatch(filterByOrigin("All"));
     setCurrentPage(1);
   };
 
@@ -73,10 +98,24 @@ function Home() {
         <div className={style.filterContainer}>
           <div className={style.searchContainer}>
             <SearchBar handleSearch={handleSearch} />
+            <div className={style.selectContainer}>
+              <button className={style.btn} onClick={handleResetFilters}>RESET</button>
+            </div>
           </div>
           <div className={style.filters}>
             <div className={style.selectContainer}>
-              <select className={style.selectBox} onChange={handleOrderByName}>
+              <select className={style.selectBox1}
+                name="Filter_Origin"
+                value={filterOrigin}
+                onChange={handleFilterOrigin}
+              >
+                <option value="All">All</option>
+                <option value="API">API</option>
+                <option value="BD">DB</option>
+              </select>
+            </div>
+            <div className={style.selectContainer}>
+              <select className={style.selectBox2} onChange={handleOrderByName}>
                 <option disabled selected defaultValue>
                   Alphabetical order
                 </option>
@@ -89,7 +128,7 @@ function Home() {
             </div>
             <div className={style.selectContainer}>
               <select
-                className={style.selectBox}
+                className={style.selectBox3}
                 onChange={handleOrderByWeight}
               >
                 <option disabled selected defaultValue>
@@ -104,7 +143,7 @@ function Home() {
             </div>
             <div className={style.selectContainer}>
               <select
-                className={style.selectBox}
+                className={style.selectBox4}
                 onChange={handleFilterByTemperament}
               >
                 <option disabled selected defaultValue>
@@ -125,9 +164,7 @@ function Home() {
         </div>
         <div className={style.bodyContainer}>
           <div className={style.cardsRender}>
-            <Cards 
-            currentDogs={currentDogs}
-            />
+            <Cards currentDogs={currentDogs} />
           </div>
           <div className={style.pagination}>
             <Paginate
@@ -142,7 +179,6 @@ function Home() {
         </div>
       </div>
     </div>
-
   );
 }
 

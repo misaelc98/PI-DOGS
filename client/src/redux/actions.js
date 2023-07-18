@@ -25,6 +25,13 @@ export function getTemperaments() {
   };
 }
 
+export function filterByOrigin(origin) {
+  return {
+    type: "FILTER_BY_ORIGIN",
+    payload: origin,
+  };
+}
+
 export function FilterByTemperament(payload) {
   return {
     type: "GET_FILTER_TEMPERAMENTS",
@@ -60,6 +67,12 @@ export function OrderByWeight(payload) {
     payload,
   };
 }
+
+export const resetFilters = () => {
+  return {
+    type: "RESET_FILTERS",
+  };
+};
 
 export function postDog(payload) {
   return async function () {
