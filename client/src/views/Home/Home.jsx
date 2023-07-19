@@ -14,6 +14,7 @@ import {
   setOrder,
   resetFilters,
   combinedFilters,
+  setPage,
 } from "../../redux/actions";
 
 function Home() {
@@ -23,41 +24,40 @@ function Home() {
   const allTemperaments = useSelector((state) => state.temperaments);
   const filtersChosen = useSelector((state) => state.filtersChosen);
   const orderChosen = useSelector((state) => state.orderChosen);
+  const actualPage = useSelector((state) => state.actualPage);
 
-  
   //LOCAL STATE FOR FILTERS
-  const [filtersChosenLocal, setfiltersChosenLocal] = useState({temperamentChosen: "", originChosen: "" });
-  
+  const [filtersChosenLocal, setfiltersChosenLocal] = useState({
+    temperamentChosen: "",
+    originChosen: "",
+  });
+
   useEffect(() => {
     setfiltersChosenLocal(filtersChosen);
     setOrderChosenLocal(orderChosen);
-  }, [filtersChosen, orderChosen])
-
+  }, [ actualPage,filtersChosen, orderChosen]);
 
   //LOCAL STATE FOR ORDER
   const [order, setOrderChosenLocal] = useState();
-  
-  function handleOrder (e) {
+
+  function handleOrder(e) {
     const selectedFilter = e.target.value;
     setOrderChosenLocal(selectedFilter);
-     dispatch(setOrder(selectedFilter));
-   }
-
+    dispatch(setOrder(selectedFilter));
+  }
 
   //PAGINATED
   const [currentPage, setCurrentPage] = useState(1);
 
   const dogsPerPage = 8;
-  const lastIndex = currentPage * dogsPerPage;
-  const firstIndex = lastIndex - dogsPerPage;
-  const currentDogs = allDogs.slice(firstIndex, lastIndex);
-  
+  const pages = Math.ceil(allDogs.length / dogsPerPage);
+  const indexLast = dogsPerPage * currentPage;
+  const indexStart = indexLast - dogsPerPage;
+  const currentDogs = allDogs.slice(indexStart, indexLast);
+
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  function next(e) 
-
 
   //FILTERS BY ORIGIN AND TEMPERAMET
   function handleFilterOrigin(e) {
@@ -171,13 +171,14 @@ function Home() {
           </div>
         </div>
         <div className={style.pagination}>
-            <Paginate
-              dogsPerPage={dogsPerPage}
-              allDogs={allDogs.length}
-              paginado={paginado}
-            />{" "}
-            {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
-          </div>
+          
+          <Paginate
+            dogsPerPage={dogsPerPage}
+            allDogs={allDogs.length}
+            paginado={paginado}
+          />{" "}
+          {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
+        </div>
         <div className={style.bodyContainer}>
           <div className={style.cardsRender}>
             <Cards currentDogs={currentDogs} />
