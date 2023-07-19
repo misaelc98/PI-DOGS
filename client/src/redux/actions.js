@@ -2,19 +2,17 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 const miApi = "http://localhost:3001";
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
-export const FILTER_BY_ORIGIN = "FILTER_BY_ORIGIN";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
-export const GET_FILTER_TEMPERAMENTS = "GET_FILTER_TEMPERAMENTS";
 export const GET_BREED = "GET_BREED";
-export const ORDER_BY_WEIGHT = "ORDER_BY_WEIGHT";
 export const RESET_FILTERS = "RESET_FILTERS";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const SET_LOADING = "SET_LOADING";
-export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const SHOW_DETAILS = "SHOW_DETAILS";
 export const SET_PAGE = "SET_PAGE";
 export const COMBINED_FILTERS = "COMBINED_FILTERS";
 export const SET_ORDER = "SET_ORDER";
+export const SET_ERROR = "SET_ERROR";
+export const CLOSE_ERROR = "CLOSE_ERROR";
 
 export function getAllDogs() {
   return async function (dispatch) {
@@ -31,32 +29,46 @@ export function getAllDogs() {
       dispatch(setLoading(false));
     }
   };
-} 
+}
 
 export function getTemperaments() {
   return async function (dispatch) {
-    var temp = await axios.get(`${miApi}/temperament`);
-    return dispatch({
-      type: GET_TEMPERAMENTS,
-      payload: temp.data,
-    });
+    try {
+      var temp = await axios.get(`${miApi}/temperament`);
+      return dispatch({
+        type: GET_TEMPERAMENTS,
+        payload: temp.data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 }
 
 export function combinedFilters(allFilters) {
-  return {
-    type: COMBINED_FILTERS,
-    payload: allFilters,
-  }
+  return async function (dispatch) {
+    try {
+      dispatch(setLoading(true));
+      return dispatch({
+        type: COMBINED_FILTERS,
+        payload: allFilters,
+      });
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 }
 
 export function setOrder(order) {
   return {
     type: SET_ORDER,
     payload: order,
-  }
+  };
 }
 
+//SEARCH BY NAME
 export function getBreed(payload) {
   return async function (dispatch) {
     try {
@@ -67,24 +79,14 @@ export function getBreed(payload) {
         payload: breed.data,
       });
     } catch (error) {
-      console.log(error);
-    }finally{
+      dispatch({
+        type: SET_ERROR,
+        payload: "Dog not found!",
+      });
+      console.log(error.message);
+    } finally {
       dispatch(setLoading(false));
     }
-  };
-}
-
-export function OrderByName(payload) {
-  return {
-    type: ORDER_BY_NAME,
-    payload,
-  };
-}
-
-export function OrderByWeight(payload) {
-  return {
-    type: ORDER_BY_WEIGHT,
-    payload,
   };
 }
 
@@ -111,29 +113,39 @@ export const setPage = (page) => {
 };
 
 export function postDog(payload) {
-  return async function () {
-    const data = await axios.post("http://localhost:3001/dog", payload);
-    return data;
+  return async function (dispatch) {
+    try {
+      const data = await axios.post("http://localhost:3001/dog", payload);
+      return data;
+    } catch (error) {
+      dispatch({
+        type: SET_ERROR,
+        payload: error.response.data.error,
+      });
+      console.log(error.message);
+    }
   };
 }
 
 export function showDogDetails(id) {
   const endpoint = `${miApi}/dogs/${id}`;
-  return async function(dispatch) {
-    try{
+  return async function (dispatch) {
+    try {
       dispatch(setLoading(true));
-      axios(endpoint).then(({ data }) => {
+      const dog = (await axios(endpoint)).data;
       return dispatch({
         type: SHOW_DETAILS,
-        payload: data,
+        payload: dog,
       });
-    });
-  } catch (error) {
-    console.log(error.message);
-  } finally{
-    dispatch(setLoading(false))
-  }
-}
+    } catch (error) {
+      dispatch({
+        type: SET_ERROR,
+        payload: "Dog not found!",
+      });
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 }
 
 export const cleanDetail = () => {
@@ -149,5 +161,11 @@ export const setLoading = (bool) => {
   return {
     type: SET_LOADING,
     payload: bool,
+  };
+};
+
+export const closeError = () => {
+  return {
+    type: CLOSE_ERROR,
   };
 };

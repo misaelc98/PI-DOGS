@@ -10,7 +10,10 @@ import {
   SET_PAGE,
   COMBINED_FILTERS,
   SET_ORDER,
-  SHOW_DETAILS
+  SHOW_DETAILS,
+  POST_DOG,
+  SET_ERROR,
+  CLOSE_ERROR,
 } from "./actions";
 
 const initialState = {
@@ -25,6 +28,10 @@ const initialState = {
   loading: true,
 
   orderChosen: "",
+
+  error:"",
+
+  showError:false,
 
   filtersChosen: {
     temperamentChosen: "",
@@ -82,6 +89,46 @@ const rootReducer = (state = initialState, action) => {
         dogs: filtered,
       };
 
+    // case POST_DOG:
+    //   const newDog = [...state.allDogs, action.payload];
+    //   if (
+    //     state.filtersChosen.originChosen === "" &&
+    //     state.filtersChosen.originChosen !== "All"
+    //   ) {
+    //     if (action.payload.originChosen === "API") {
+    //       newDog = newDog.filter((dog) => isNaN(dog.id) === false);
+    //     } else {
+    //       newDog = newDog.filter((dog) => isNaN(dog.id) === true);
+    //     }
+    //   }
+    //   if (
+    //     state.filtersChosen.temperamentChosen !== "All" &&
+    //     state.filtersChosen.temperamentChosen !== ""
+    //   ) {
+    //     newDog = newDog.filter((dog) =>
+    //       dog.temperaments.includes(state.filtersChosen.temperamentChosen)
+    //     );
+    //   }
+    // return {
+    //   ...state,
+    //   allDogs: [...state.allDogs, action.payload],
+    //   // dogs: newDog,
+    // };
+
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        showError: true,
+      };
+
+    case CLOSE_ERROR:
+      return {
+        ...state,
+        error: "",
+        showError: false,
+      };
+
     case SET_LOADING:
       return {
         ...state,
@@ -120,17 +167,17 @@ const rootReducer = (state = initialState, action) => {
           orderChosen: action.payload,
           dogs: [...state.dogs].sort((a, b) => b.name.localeCompare(a.name)),
         };
-      } else if (action.payload === "Max") {
-        return {
-          ...state,
-          orderChosen: action.payload,
-          dogs: [...state.dogs].sort((a, b) => a.weightMax - b.weightMax),
-        };
       } else if (action.payload === "Min") {
         return {
           ...state,
           orderChosen: action.payload,
-          dogs: [...state.dogs].sort((a, b) => b.weightMin - a.weightMin),
+          dogs: [...state.dogs].sort((a, b) => a.weightMin - b.weightMin),
+        };
+      } else if (action.payload === "Max") {
+        return {
+          ...state,
+          orderChosen: action.payload,
+          dogs: [...state.dogs].sort((a, b) => b.weightMax - a.weightMax),
         };
       }
       return {

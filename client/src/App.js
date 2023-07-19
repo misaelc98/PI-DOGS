@@ -9,11 +9,13 @@ import Header from "./components/Header/Header";
 import DogDetails from "./Views/Detail/Detail";
 import AddForm from "./components/AddForm/AddForm";
 import Cards from "./components/Cards/Cards";
+import AlertMsg from "./components/AlertMsg/AlertMsg";
 
 function App() {
 
   const dispatch = useDispatch();
-
+  const showError = useSelector((state)=> state.showError);
+  
   //Montaje y acciones despachadas
   
   useEffect(() => {
@@ -25,6 +27,9 @@ function App() {
 
   return (
     <div className="App">
+
+      {showError && <AlertMsg/>}
+
       <Routes>
         <Route path="/" element={<Landing />} />
 

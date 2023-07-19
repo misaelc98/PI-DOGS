@@ -30,9 +30,9 @@ const createDog = async (req, res) => {
       dog.addTemperament(temperamentosAgregados);
     }
 
-    res.status(200).send("Perro creado correctamente!");
+    res.status(200).send("Dog added succesfully!");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "The dog already exists!" });
   }
 };
 

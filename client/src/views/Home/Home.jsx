@@ -12,8 +12,6 @@ import {
   getAllDogs,
   getTemperaments,
   setOrder,
-  OrderByName,
-  OrderByWeight,
   resetFilters,
   combinedFilters,
 } from "../../redux/actions";
@@ -29,6 +27,7 @@ function Home() {
   
   //LOCAL STATE FOR FILTERS
   const [filtersChosenLocal, setfiltersChosenLocal] = useState({temperamentChosen: "", originChosen: "" });
+  
   useEffect(() => {
     setfiltersChosenLocal(filtersChosen);
     setOrderChosenLocal(orderChosen);
@@ -45,16 +44,19 @@ function Home() {
    }
 
 
-
   //PAGINATED
   const [currentPage, setCurrentPage] = useState(1);
+
   const dogsPerPage = 8;
   const lastIndex = currentPage * dogsPerPage;
   const firstIndex = lastIndex - dogsPerPage;
   const currentDogs = allDogs.slice(firstIndex, lastIndex);
+  
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  function next(e) 
 
 
   //FILTERS BY ORIGIN AND TEMPERAMET
@@ -90,22 +92,6 @@ function Home() {
     setCurrentPage(1);
   }
 
-  //ORDER BY NAME OR WEIGHT
-  // function handleOrderByName(e) {
-  //   const selectedOrder = e.target.value;
-  //   setOrder(selectedOrder);
-  //   dispatch(OrderByName(selectedOrder));
-  //   // dispatch(filterByOrigin("All"));
-  //   setCurrentPage(1);
-  // }
-
-  // function handleOrderByWeight(e) {
-  //   const selectedOrder = e.target.value;
-  //   setOrder(selectedOrder);
-  //   dispatch(OrderByWeight(selectedOrder));
-  //   setCurrentPage(1);
-  // }
-
   //Manejo de la busqueda
   const handleSearch = (e) => {
     setCurrentPage(1);
@@ -117,8 +103,6 @@ function Home() {
     dispatch(getAllDogs());
     dispatch(getTemperaments());
     setCurrentPage(1);
-    // dispatch(FilterByTemperament("All"));
-    // dispatch(filterByOrigin("All"));
   };
 
   const loading = useSelector((state) => state.loading);
@@ -186,6 +170,14 @@ function Home() {
             </div>
           </div>
         </div>
+        <div className={style.pagination}>
+            <Paginate
+              dogsPerPage={dogsPerPage}
+              allDogs={allDogs.length}
+              paginado={paginado}
+            />{" "}
+            {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
+          </div>
         <div className={style.bodyContainer}>
           <div className={style.cardsRender}>
             <Cards currentDogs={currentDogs} />
@@ -198,8 +190,6 @@ function Home() {
             />{" "}
             {/*el valor de la funcion de paginado aumenta segun el bucle for en el componente Paginate*/}
           </div>
-
-          {/* <Footer/> */}
         </div>
       </div>
     </div>
