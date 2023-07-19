@@ -3,8 +3,8 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: blue;
-  box-shadow: 0 2px 0 2px #000;
+  background-color: #ddce11;
+  box-shadow: rgba(0, 0, 0, 0.17) 10px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 10px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 10px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 10px 2px 1px, rgba(0, 0, 0, 0.09) 15px 4px 2px, rgba(0, 0, 0, 0.09) 15px 8px 4px, rgba(0, 0, 0, 0.09) 15px 16px 8px, rgba(0, 0, 0, 0.09) 15px 32px 16px;
 }
 
 .formbox {
@@ -16,8 +16,9 @@
   height: 80%;
   justify-content: center;
   align-items: center;
-  background-color: aqua;
+  background-color: rgb(237, 96, 8);
   border-radius: 15px;
+  box-shadow: 0 2px 0 2px #000;
 }
 
 .form {
@@ -29,11 +30,13 @@
 
 .nameContainer {
   display: flex;
-  position: relative;
-  top: 0;
+  position: absolute;
+  top: 5%;
+  left: 39.5%;
   width: 20%;
   height: 10%;
   background-color: transparent;
+  color: #fff;
 }
 
 .inputname {
@@ -55,10 +58,123 @@
   font-weight: bolder;
   box-shadow: 0 2px 0 2px #000;
 }
-.inputname .placeholder{
-    align-items: center;
-    justify-content: center;
-    color: white;
+.inputname .placeholder {
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.heightContainer {
+  display: flex;
+  position: absolute;
+  margin-top: 3%;
+  top: 16%;
+  left: 25%;
+  width: 60%;
+  height: 10%;
+  background-color: transparent;
+  gap: 10rem;
+}
+
+.inputminheight {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0.2em;
+  padding: 1.1em 1.3em;
+  background: none;
+  border: 2px solid #fff;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-radius: 12px;
+  width: 100%;
+  background-color: #0d3b66;
+  font-weight: bolder;
+  box-shadow: 0 2px 0 2px #000;
+}
+.inputminheight .placeholder {
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.inputmaxheight {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0.2em;
+  padding: 1.1em 1.3em;
+  background: none;
+  border: 2px solid #fff;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-radius: 12px;
+  width: 100%;
+  background-color: #0d3b66;
+  font-weight: bolder;
+  box-shadow: 0 2px 0 2px #000;
+}
+.inputmaxheight .placeholder {
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.weightContainer {
+  display: flex;
+  position: absolute;
+  margin-top: 3%;
+  top: 40%;
+  left: 20%;
+  width: 60%;
+  height: 10%;
+  background-color: transparent;
+  gap: 10rem;
+}
+
+.minweight {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0.2em;
+  padding: 1.1em 1.3em;
+  background: none;
+  border: 2px solid #fff;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-radius: 12px;
+  width: 90%;
+  background-color: #0d3b66;
+  font-weight: bolder;
+  box-shadow: 0 2px 0 2px #000;
+}
+.maxweight {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  letter-spacing: 0.2em;
+  padding: 1.1em 1.3em;
+  background: none;
+  border: 2px solid #fff;
+  font-size: 17px;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  border-radius: 12px;
+  width: 100%;
+  background-color: #0d3b66;
+  font-weight: bolder;
+  box-shadow: 0 2px 0 2px #000;
 }
 
 /* 

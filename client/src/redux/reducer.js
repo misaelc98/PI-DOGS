@@ -2,21 +2,34 @@ import {
   GET_ALL_DOGS,
   FILTER_BY_ORIGIN,
   GET_TEMPERAMENTS,
-  GET_FILTER_TEMPERAMENTS,
   GET_BREED,
   ORDER_BY_WEIGHT,
   RESET_FILTERS,
   CLEAN_DETAIL,
   SET_LOADING,
-  SET_PAGE
+  SET_PAGE,
+  COMBINED_FILTERS,
+  SET_ORDER,
+  SHOW_DETAILS
 } from "./actions";
 
 const initialState = {
   dogs: [],
+
   temperaments: [],
+
   allDogs: [],
+
   details: [],
+
   loading: true,
+
+  orderChosen: "",
+
+  filtersChosen: {
+    temperamentChosen: "",
+    originChosen: "",
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -40,22 +53,33 @@ const rootReducer = (state = initialState, action) => {
         temperaments: filteredTemp,
       };
 
-    case GET_FILTER_TEMPERAMENTS:
-      const allDogs = state.allDogs;
-      let filteredDogs = [];
-      if (action.payload === "Todos") {
-        filteredDogs = allDogs;
-      } else {
-        for (let i = 0; i < allDogs.length; i++) {
-          let found = allDogs[i].temperaments.find((t) => t === action.payload);
-          if (found) {
-            filteredDogs.push(allDogs[i]);
-          }
+    //LOGICA DEL COMBINADO DE FILTRO ORIGEN Y TEMPERAMENTOS
+    case COMBINED_FILTERS:
+      let filtered = [...state.allDogs];
+      if (
+        action.payload.originChosen !== "All" &&
+        action.payload.originChosen !== ""
+      ) {
+        if (action.payload.originChosen === "API") {
+          filtered = filtered.filter((dog) => isNaN(dog.id) === false);
+        } else {
+          filtered = filtered.filter((dog) => isNaN(dog.id) === true);
         }
       }
+
+      if (
+        action.payload.temperamentChosen !== "All" &&
+        action.payload.temperamentChosen !== ""
+      ) {
+        filtered = filtered.filter((dog) =>
+          dog.temperaments.includes(action.payload.temperamentChosen)
+        );
+      }
+
       return {
         ...state,
-        dogs: filteredDogs,
+        filtersChosen: action.payload,
+        dogs: filtered,
       };
 
     case SET_LOADING:
@@ -66,26 +90,6 @@ const rootReducer = (state = initialState, action) => {
 
     case SET_PAGE:
       return { ...state, currentPage: action.payload };
-
-    case FILTER_BY_ORIGIN:
-      if (action.payload === "All") {
-        return {
-          ...state,
-          dogs: state.allDogs,
-        };
-      } else {
-        if (action.payload === "BD") {
-          return {
-            ...state,
-            dogs: state.allDogs.filter((dog) => isNaN(dog.id) === true),
-          };
-        } else {
-          return {
-            ...state,
-            dogs: state.allDogs.filter((dog) => isNaN(dog.id) === false),
-          };
-        }
-      }
 
     case RESET_FILTERS:
       return initialState;
@@ -103,65 +107,39 @@ const rootReducer = (state = initialState, action) => {
         dogs: action.payload,
       };
 
-    case "ORDER_BY_NAME":
-      const sortedName =
-        action.payload === "A-Z"
-          ? state.allDogs.sort((a, b) => {
-              if (a.name > b.name) {
-                return 1;
-              }
-              if (b.name > a.name) {
-                return -1;
-              }
-              return 0;
-            })
-          : state.allDogs.sort((a, b) => {
-              if (a.name > b.name) {
-                return -1;
-              }
-              if (b.name > a.name) {
-                return 1;
-              }
-              return 0;
-            });
+    case SET_ORDER:
+      if (action.payload === "A-Z") {
+        return {
+          ...state,
+          orderChosen: action.payload,
+          dogs: [...state.dogs].sort((a, b) => a.name.localeCompare(b.name)),
+        };
+      } else if (action.payload === "Z-A") {
+        return {
+          ...state,
+          orderChosen: action.payload,
+          dogs: [...state.dogs].sort((a, b) => b.name.localeCompare(a.name)),
+        };
+      } else if (action.payload === "Max") {
+        return {
+          ...state,
+          orderChosen: action.payload,
+          dogs: [...state.dogs].sort((a, b) => a.weightMax - b.weightMax),
+        };
+      } else if (action.payload === "Min") {
+        return {
+          ...state,
+          orderChosen: action.payload,
+          dogs: [...state.dogs].sort((a, b) => b.weightMin - a.weightMin),
+        };
+      }
       return {
         ...state,
-        dogs: sortedName,
+        orderChosen: action.payload,
+        dogs: state.dogs,
       };
 
-    case FILTER_BY_ORIGIN:
-      return {
-        ...state,
-        origenPerros: action.payload,
-      };
-
-    case ORDER_BY_WEIGHT:
-      const sortedWeight =
-        action.payload === "min_weight"
-          ? state.allDogs.sort((a, b) => {
-              if (parseInt(a.weightMin) > parseInt(b.weightMin)) {
-                return 1;
-              }
-              if (parseInt(b.weightMin) > parseInt(a.weightMin)) {
-                return -1;
-              }
-              return 0;
-            })
-          : state.allDogs.sort((a, b) => {
-              if (parseInt(a.weightMax) > parseInt(b.weightMax)) {
-                return -1;
-              }
-              if (parseInt(b.weightMax) > parseInt(a.weightMax)) {
-                return 1;
-              }
-              return 0;
-            });
-      return {
-        ...state,
-        dogs: sortedWeight,
-      };
-
-    case "SHOW_DETAILS":
+    case SHOW_DETAILS:
       let myDetails = action.payload;
       if (myDetails.temperaments.length === 0) {
         //   //agregamos "no-temperaments" a arreglos sin elementos dentro

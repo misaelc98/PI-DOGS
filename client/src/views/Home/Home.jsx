@@ -11,90 +11,114 @@ import Loading from "../../components/Loading/Loading";
 import {
   getAllDogs,
   getTemperaments,
-  FilterByTemperament,
-  filterByOrigin,
+  setOrder,
   OrderByName,
   OrderByWeight,
   resetFilters,
+  combinedFilters,
 } from "../../redux/actions";
 
 function Home() {
-  
   const dispatch = useDispatch();
-  const allDogs = useSelector((state) => state.dogs); //valores del estado global de redux que requiero
-  const allTemperaments = useSelector((state) => state.temperaments);
-  const [order, setOrder] = useState("");
-  const [filterTemperament, setFilterTemperament] = useState();
-  const [name, setName] = useState();
-  const [filterOrigin, setFilterOrigin] = useState();
 
-  //Logica paginado
+  const allDogs = useSelector((state) => state.dogs);
+  const allTemperaments = useSelector((state) => state.temperaments);
+  const filtersChosen = useSelector((state) => state.filtersChosen);
+  const orderChosen = useSelector((state) => state.orderChosen);
+
+  
+  //LOCAL STATE FOR FILTERS
+  const [filtersChosenLocal, setfiltersChosenLocal] = useState({temperamentChosen: "", originChosen: "" });
+  useEffect(() => {
+    setfiltersChosenLocal(filtersChosen);
+    setOrderChosenLocal(orderChosen);
+  }, [filtersChosen, orderChosen])
+
+
+  //LOCAL STATE FOR ORDER
+  const [order, setOrderChosenLocal] = useState();
+  
+  function handleOrder (e) {
+    const selectedFilter = e.target.value;
+    setOrderChosenLocal(selectedFilter);
+     dispatch(setOrder(selectedFilter));
+   }
+
+
+
+  //PAGINATED
   const [currentPage, setCurrentPage] = useState(1);
   const dogsPerPage = 8;
   const lastIndex = currentPage * dogsPerPage;
   const firstIndex = lastIndex - dogsPerPage;
-  const currentDogs = allDogs.slice(firstIndex, lastIndex); //elementos a renderizar en la pagina, segun el valor de paginado
-
-  // console.log(currentDogs);
-
+  const currentDogs = allDogs.slice(firstIndex, lastIndex);
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
 
-
-
-  //
+  //FILTERS BY ORIGIN AND TEMPERAMET
   function handleFilterOrigin(e) {
     const selectedFilter = e.target.value;
-    setFilterOrigin(selectedFilter);
-    setFilterTemperament("All");
-    setName("");
-    dispatch(FilterByTemperament("All"));
-    dispatch(filterByOrigin(selectedFilter));
+    setfiltersChosenLocal({
+      ...filtersChosenLocal,
+      originChosen: selectedFilter,
+    });
+    dispatch(
+      combinedFilters({
+        ...filtersChosen,
+        originChosen: selectedFilter,
+      })
+    );
+    dispatch(setOrder(order));
     setCurrentPage(1);
   }
 
   function handleFilterByTemperament(e) {
     const selectedFilter = e.target.value;
-    setFilterTemperament(selectedFilter);
-    setFilterOrigin("All");
-    setName("");
-    dispatch(filterByOrigin("All"));
-    dispatch(FilterByTemperament(selectedFilter));
+    setfiltersChosenLocal({
+      ...filtersChosenLocal,
+      temperamentChosen: selectedFilter,
+    });
+    dispatch(
+      combinedFilters({
+        ...filtersChosen,
+        temperamentChosen: selectedFilter,
+      })
+    );
+    dispatch(setOrder(order));
     setCurrentPage(1);
   }
 
-  //Busqueda por nombre de los perros y reseteo de los filtros
-  function handleOrderByName(e) {
-    const selectedOrder = e.target.value;
-    setOrder(selectedOrder);
-    dispatch(OrderByName(selectedOrder));
-    dispatch(filterByOrigin("All"));
-    setCurrentPage(1);
-  }
+  //ORDER BY NAME OR WEIGHT
+  // function handleOrderByName(e) {
+  //   const selectedOrder = e.target.value;
+  //   setOrder(selectedOrder);
+  //   dispatch(OrderByName(selectedOrder));
+  //   // dispatch(filterByOrigin("All"));
+  //   setCurrentPage(1);
+  // }
 
-  
-  function handleOrderByWeight(e) {
-    const selectedOrder = e.target.value;
-    setOrder(selectedOrder);
-    dispatch(OrderByWeight(selectedOrder));
-    setCurrentPage(1);
-  }
+  // function handleOrderByWeight(e) {
+  //   const selectedOrder = e.target.value;
+  //   setOrder(selectedOrder);
+  //   dispatch(OrderByWeight(selectedOrder));
+  //   setCurrentPage(1);
+  // }
 
   //Manejo de la busqueda
   const handleSearch = (e) => {
     setCurrentPage(1);
   };
 
-  //Reseteo los estados y filtros
+  //RESET STATES AND FILTERS
   const handleResetFilters = () => {
     dispatch(resetFilters());
     dispatch(getAllDogs());
     dispatch(getTemperaments());
-    dispatch(FilterByTemperament("All"));
-    dispatch(filterByOrigin("All"));
     setCurrentPage(1);
+    // dispatch(FilterByTemperament("All"));
+    // dispatch(filterByOrigin("All"));
   };
 
   const loading = useSelector((state) => state.loading);
@@ -117,7 +141,7 @@ function Home() {
               <select
                 className={style.origin}
                 name="Filter_Origin"
-                value={filterOrigin}
+                value={filtersChosenLocal.originChosen}
                 onChange={handleFilterOrigin}
               >
                 <option value="All">All</option>
@@ -126,7 +150,7 @@ function Home() {
               </select>
             </div>
             <div className={style.selectContainer}>
-              <select className={style.alphabetic} onChange={handleOrderByName}>
+              <select className={style.alphabetic} onChange={handleOrder}>
                 <option disabled selected defaultValue>
                   ALPHABETICAL
                 </option>
@@ -135,26 +159,24 @@ function Home() {
               </select>
             </div>
             <div className={style.selectContainer}>
-              <select
-                className={style.weight}
-                onChange={handleOrderByWeight}
-              >
+              <select className={style.weight} onChange={handleOrder}>
                 <option disabled selected defaultValue>
                   WEIGHT
                 </option>
-                <option value="max_weight">Max</option>
-                <option value="min_weight">Min</option>
+                <option value="Max">Max</option>
+                <option value="Min">Min</option>
               </select>
             </div>
             <div className={style.selectContainer}>
               <select
                 className={style.temperaments}
                 onChange={handleFilterByTemperament}
+                value={filtersChosenLocal.temperamentChosen}
               >
-                <option disabled selected defaultValue>
+                {/* <option disabled selected defaultValue>
                   TEMPERAMENTS
-                </option>
-                <option value="Todos">All</option>
+                </option> */}
+                <option>All</option>
                 {allTemperaments?.map((temp) => (
                   <option value={temp.name} key={temp.id}>
                     {temp.name}

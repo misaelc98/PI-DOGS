@@ -15,6 +15,7 @@ function App() {
   const dispatch = useDispatch();
 
   //Montaje y acciones despachadas
+  
   useEffect(() => {
     dispatch(getAllDogs());
     dispatch(getTemperaments());

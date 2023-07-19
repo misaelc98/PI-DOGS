@@ -13,6 +13,8 @@ export const SET_LOADING = "SET_LOADING";
 export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const SHOW_DETAILS = "SHOW_DETAILS";
 export const SET_PAGE = "SET_PAGE";
+export const COMBINED_FILTERS = "COMBINED_FILTERS";
+export const SET_ORDER = "SET_ORDER";
 
 export function getAllDogs() {
   return async function (dispatch) {
@@ -41,18 +43,18 @@ export function getTemperaments() {
   };
 }
 
-export function filterByOrigin(origin) {
+export function combinedFilters(allFilters) {
   return {
-    type: FILTER_BY_ORIGIN,
-    payload: origin,
-  };
+    type: COMBINED_FILTERS,
+    payload: allFilters,
+  }
 }
 
-export function FilterByTemperament(payload) {
+export function setOrder(order) {
   return {
-    type: GET_FILTER_TEMPERAMENTS,
-    payload,
-  };
+    type: SET_ORDER,
+    payload: order,
+  }
 }
 
 export function getBreed(payload) {

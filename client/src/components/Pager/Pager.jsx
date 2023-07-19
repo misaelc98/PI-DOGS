@@ -5,6 +5,18 @@ export default function Paginate({ dogsPerPage, allDogs, paginado }) {
 
     const pageNumbers =[];
 
+    // function pageChange(e) {
+    //     if (e === "NEXT") {
+    //       if (currentPage < pages) {
+    //         dispatch(change_page(currentPage + 1));
+    //       }
+    //     } else {
+    //       if (currentPage > 1) {
+    //         dispatch(change_page(currentPage - 1));
+    //       }
+    //     }
+    //   }
+
     for (let i = 1; i <= Math.ceil(allDogs / dogsPerPage); i++) { //cantidad de elementos totales, dividido limite de elementos por pagina
         pageNumbers.push(i);
     }

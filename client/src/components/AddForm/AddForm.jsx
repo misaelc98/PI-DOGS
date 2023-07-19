@@ -18,11 +18,19 @@ const validate = (form) => {
     errors.height = "Height is required!";
   } else if (form.heightMin > form.heightMax) {
     errors.height = "Min height can't be higher than Max height";
+  } else if (form.heightMin < 0 || form.heightMax < 0) {
+    errors.height = "Height must be higher than 0";
+  } else if (!/^\d+$/.test(form.heightMin) || !/^\d+$/.test(form.heightMax)) {
+    errors.height = "Height must be a number!";
   }
   if (!form.weightMin || !form.weightMax) {
     errors.weight = "Weight is required!";
   } else if (form.weightMin > form.weightMax) {
     errors.weight = "Min Weight can't be higher than Max weight";
+  } else if (form.weightMin < 0 || form.weightMax < 0) {
+    errors.height = "Weight must be higher than 0";
+  } else if (!/^\d+$/.test(form.weightMin) || !/^\d+$/.test(form.weightMax)) {
+    errors.height = "Height must be a number!";
   }
   if (!form.life_span) {
     errors.life_span =
@@ -141,31 +149,59 @@ export default function FormAddDog() {
               onChange={(e) => handleChange(e)}
               placeholder="BREED"
             />
+            <div className={style.errorform}>
+              {errors.name && <p>{errors.name}</p>}
+            </div>{" "}
           </div>
-          <div className={style.errorform}>
-            {errors.name && <p>{errors.name}</p>}
-          </div>{" "}
-          <div className={style.height_container}>
-             <div className={style.min_height}>
-               <input
-                 type="number"
-                 value={form.heightMin}
-                name="heightMin"
-                 placeholder="Min height..."
-                onChange={(e) => handleChange(e)}
-               />
-             </div>
+          <div className={style.heightContainer}>
+            <input
+              className={style.inputminheight}
+              type="text"
+              value={form.heightMin}
+              name="heightMin"
+              placeholder="Min height..."
+              onChange={(e) => handleChange(e)}
+            />
 
-             <div className={style.max_height}>
-               <input
-                 type="number"
-                 value={form.heightMax}
-                 name="heightMax"
-                 placeholder="Max height..."
-                 onChange={(e) => handleChange(e)}
-               />
-             </div>
-           </div>
+            <input
+              className={style.inputmaxheight}
+              type="text"
+              value={form.heightMax}
+              name="heightMax"
+              placeholder="Max height..."
+              onChange={(e) => handleChange(e)}
+            />
+            <div className={style.error_form}>
+              {errors.height && <p>{errors.height}</p>}
+            </div>
+          </div>
+
+          <div className={style.weightContainer}>
+            <div>
+              <input
+                className={style.minweight}
+                type="number"
+                value={form.weightMin}
+                name="weightMin"
+                placeholder="Min weight..."
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+
+            <div>
+              <input
+                className={style.maxweight}
+                type="number"
+                value={form.weightMax}
+                name="weightMax"
+                placeholder="Max weight..."
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className={style.error_form}>
+              {errors.weight && <p>{errors.weight}</p>}
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -247,6 +283,7 @@ export default function FormAddDog() {
 //           <div className={style.error_form}>
 //             {errors.weight && <p>{errors.weight}</p>}
 //           </div>
+
 //           {/* espacio para agregar error */}
 //           <div className="life-span-container">
 //             <input
