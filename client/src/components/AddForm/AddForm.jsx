@@ -38,6 +38,7 @@ const validate = (form) => {
   if (!form.temperaments) {
     errors.temperaments = "Must select at least one temperament";
   }
+
   return errors;
 };
 
