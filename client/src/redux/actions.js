@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 const miApi = "http://localhost:3001";
+
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 export const GET_BREED = "GET_BREED";
@@ -13,6 +16,8 @@ export const COMBINED_FILTERS = "COMBINED_FILTERS";
 export const SET_ORDER = "SET_ORDER";
 export const SET_ERROR = "SET_ERROR";
 export const CLOSE_ERROR = "CLOSE_ERROR";
+
+
 
 export function getAllDogs() {
   return async function (dispatch) {
@@ -62,13 +67,23 @@ export function combinedFilters(allFilters) {
 }
 
 export function setOrder(order) {
-  return {
-    type: SET_ORDER,
-    payload: order,
+  return async function (dispatch) {
+    try {
+      dispatch(setLoading(true));
+      return dispatch({
+        type: SET_ORDER,
+        payload: order,
+      });
+    } catch (error) {
+      console.log("Error setting Order", error.message);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 }
 
 //SEARCH BY NAME
+
 export function getBreed(payload) {
   return async function (dispatch) {
     try {
@@ -115,6 +130,7 @@ export const setPage = (page) => {
 export function postDog(payload) {
   return async function (dispatch) {
     try {
+      dispatch(setLoading(true));
       const data = await axios.post("http://localhost:3001/dog", payload);
       return data;
     } catch (error) {
@@ -123,6 +139,8 @@ export function postDog(payload) {
         payload: error.response.data.error,
       });
       console.log(error.message);
+    } finally {
+      setTimeout(()=>dispatch( dispatch(setLoading(false)) ), 1200) ;
     }
   };
 }
@@ -133,7 +151,7 @@ export function showDogDetails(id) {
     try {
       dispatch(setLoading(true));
       const dog = (await axios(endpoint)).data;
-      return dispatch({
+      dispatch({
         type: SHOW_DETAILS,
         payload: dog,
       });

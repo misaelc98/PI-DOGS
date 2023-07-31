@@ -8,7 +8,7 @@ export default function Cards({ currentDogs }) {
       {currentDogs?.map((el) => {
         return (
           <NavLink to={"/dogs/" + el.id}>
-            <div key={el.id}>
+            <div>
               <Card
                 key={el?.id}
                 image={el?.image}

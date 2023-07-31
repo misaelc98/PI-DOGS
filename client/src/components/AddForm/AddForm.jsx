@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { getTemperaments, postDog } from "../../redux/actions";
 import style from "./AddForm.module.css";
 
+
 const validate = (form) => {
   let errors = {};
 
@@ -35,7 +36,7 @@ const validate = (form) => {
     errors.life_span =
       "Lifespan is required, type only numbers separated by a dash (-)";
   }
-  if (!form.temperaments) {
+  if (!form.temperaments.length <= 0) {
     errors.temperaments = "Must select at least one temperament";
   }
 
@@ -117,10 +118,13 @@ export default function FormAddDog() {
   };
 
   const handleSelect = (e) => {
-    setForm({
-      ...form,
-      temperaments: [...form.temperaments, e.target.value],
-    });
+    const selectedTemperament = e.target.value;
+    if (!form.temperaments.includes(selectedTemperament)) {
+      setForm({
+        ...form,
+        temperaments: [...form.temperaments, selectedTemperament],
+      });
+    }
   };
 
   const handleDelete = (el) => {
@@ -153,7 +157,6 @@ export default function FormAddDog() {
           <div className={style.error_form}>
             {errors.name && <p>{errors.name}</p>}
           </div>{" "}
-          {/*mesaje ed error de nombre*/}
           <div className={style.height_container}>
             <div className={style.min_height}>
               <input
@@ -180,8 +183,6 @@ export default function FormAddDog() {
           <div className={style.error_form}>
             {errors.height && <p>{errors.height}</p>}
           </div>
-          {/* espacio para agregar error */}
-          {/* espacio para agregar error */}
           <div className={style.weight_container}>
             <div className={style.min_weight}>
               <input
@@ -208,7 +209,6 @@ export default function FormAddDog() {
           <div className={style.error_form}>
             {errors.weight && <p>{errors.weight}</p>}
           </div>
-          {/* espacio para agregar error */}
           <div className="life-span-container">
             <input
               type="text"
@@ -222,7 +222,6 @@ export default function FormAddDog() {
           <div className={style.error_form}>
             {errors.life_span && <p>{errors.life_span}</p>}
           </div>
-          {/* espacio para agregar error */}
           <div className="image-container">
             <input
               type="text"
@@ -244,7 +243,7 @@ export default function FormAddDog() {
               className={style.select_temperaments}
               onChange={handleSelect}
             >
-              <option disabled selected>
+              <option value="" >
                 Temperaments
               </option>
               {temperaments.map((d) => (
@@ -283,6 +282,9 @@ export default function FormAddDog() {
               >
                 Create Dog
               </button>
+            </div>
+            <div className={style.requirements}>
+              All fields are required
             </div>
           </div>
         </div>

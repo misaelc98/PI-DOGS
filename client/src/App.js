@@ -10,6 +10,7 @@ import DogDetails from "./Views/Detail/Detail";
 import AddForm from "./components/AddForm/AddForm";
 import Cards from "./components/Cards/Cards";
 import AlertMsg from "./components/AlertMsg/AlertMsg";
+import Loading from "./components/Loading/Loading";
 
 function App() {
 
@@ -25,10 +26,14 @@ function App() {
 
   // enctype = multipart/form-data PARA PODER CARGAR LA IMAGEN
 
+  const loading = useSelector((state) => state.loading);
+
   return (
     <div className="App">
 
       {showError && <AlertMsg/>}
+
+      {loading && <Loading/>}
 
       <Routes>
         <Route path="/" element={<Landing />} />

@@ -35,7 +35,7 @@ function Home() {
   useEffect(() => {
     setfiltersChosenLocal(filtersChosen);
     setOrderChosenLocal(orderChosen);
-  }, [ actualPage,filtersChosen, orderChosen]);
+  }, [filtersChosen, orderChosen]);
 
   //LOCAL STATE FOR ORDER
   const [order, setOrderChosenLocal] = useState();
@@ -199,12 +199,3 @@ function Home() {
 
 export default Home;
 
-// <div className={style.leftBody}>
-//           <Slider />
-//         </div>
-//         <div className={style.rightBody}>
-//           <h3>¿LISTO?</h3>
-//           <NavLink to="/home">
-//             <button>FIND YOUR NEXT DOG</button>
-//           </NavLink>
-//         </div>

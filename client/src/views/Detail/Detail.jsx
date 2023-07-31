@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
-import { cleanDetail, setLoading, showDogDetails } from "../../redux/actions";
+import { useParams } from "react-router-dom";
+import { cleanDetail, showDogDetails } from "../../redux/actions";
 import { NavLink } from "react-router-dom";
 import style from "./Detail.module.css";
-import axios from "axios";
 import Loading from "../../components/Loading/Loading";
+import { FcRuler } from "react-icons/fc";
+import { PiScalesLight } from "react-icons/pi";
+import {FcLike} from "react-icons/fc";
 
 export default function DogDetails() {
   const dispatch = useDispatch();
@@ -13,7 +15,9 @@ export default function DogDetails() {
 
   useEffect(() => {
     dispatch(showDogDetails(id));
-    dispatch(cleanDetail());
+    return () => {
+      dispatch(cleanDetail());
+    };
   }, [dispatch, id]);
 
   const details = useSelector((state) => state.details);
@@ -32,12 +36,13 @@ export default function DogDetails() {
 
   return (
     <div className={style.mainContainer}>
+      {loading && <Loading />}
       <NavLink to="/home" className={style.navlink}>
         <div className={style.arrow}>
-          <span >← </span>
+          <span>← </span>
         </div>
       </NavLink>
-      {loading && <Loading />}
+
       <div className={style.boxImage}>
         <img
           className={style.image}
@@ -52,15 +57,16 @@ export default function DogDetails() {
         <div>
           <h3
             className={style.props}
-          >{`Height: ${`${details?.heightMin} - ${details?.heightMax}`}  CM`}</h3>
+          > 
+          <FcRuler /> {`Height: ${`${details?.heightMin} - ${details?.heightMax}`}  CM`}</h3>
         </div>
         <div>
           <h3
             className={style.props}
-          >{`Weight: ${`${details?.weightMin} - ${details?.weightMax}`} KG`}</h3>
+          > <PiScalesLight/> {`Weight: ${`${details?.weightMin} - ${details?.weightMax}`} KG`}</h3>
         </div>
         <div>
-          <h3 className={style.props}>{`Lifespan: ${details?.life_span}`}</h3>
+          <h3 className={style.props}> <FcLike/> {`Lifespan: ${details?.life_span}`}</h3>
         </div>
         <div className={style.temperamento}>
           <h3>Temperaments</h3>

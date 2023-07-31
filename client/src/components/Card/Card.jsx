@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import style from "../Card/Card.module.css";
+import { FcRuler } from "react-icons/fc";
+import { PiScalesLight } from "react-icons/pi";
 
 const Card = ({ image, name, temperaments, weightMin, weightMax }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -35,7 +37,8 @@ const Card = ({ image, name, temperaments, weightMin, weightMax }) => {
           ))}
         </div>
         <p className={style.peso}>
-          {`WEIGHT: ${weightMin}`} - {`${weightMax}`} KG
+          {" "} <PiScalesLight />
+          {`  WEIGHT: ${weightMin}`} - {`${weightMax}`} KG
         </p>
       </div>
     </div>
@@ -43,49 +46,3 @@ const Card = ({ image, name, temperaments, weightMin, weightMax }) => {
 };
 
 export default Card;
-
-// import React from "react";
-// import style from "../Card/Card.module.css";
-// import { useState } from "react";
-// import { NavLink } from "react-router-dom";
-
-// export default function Card({
-//   image,
-//   name,
-//   temperaments,
-//   weightMin,
-//   weightMax,
-// }) {
-
-
-//   return (
-//     <div className={style.cardContainer} >
-      
-//       <div className={style.imageContainer}>
-//         <img
-//           className={style.dogImage}
-//           src={`${image}`}
-//           alt={`imagen de: ${name}`}
-//         />
-//       </div>
-//       <h2 className={style.name}>{name}</h2>
-//       <h2 className={style.temperamnt}>Temperaments</h2>
-//       <div className={style.tempContainer}>
-      
-//         {temperaments.map((temps) => (
-//           <h3>{temps}</h3>
-//         ))}
-//       </div>
-//       <p>
-//         {`${weightMin}`} - {`${weightMax}`}
-//       </p>
-      
-//     </div>
-//   );
-// }
-
-// key={temps + Math.random}
-
-// const [hovered, setHovered] = useState(false);
-// onMouseEnter={() => setHovered(true)}
-// onMouseLeave={() => setHovered(false)}

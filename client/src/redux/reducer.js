@@ -25,7 +25,7 @@ const initialState = {
 
   actualPage: 1,
 
-  loading: true,
+  loading: false,
 
   orderChosen: "",
 
@@ -163,8 +163,7 @@ const rootReducer = (state = initialState, action) => {
     case SHOW_DETAILS:
       let myDetails = action.payload;
       if (myDetails.temperaments.length === 0) {
-        //   //agregamos "no-temperaments" a arreglos sin elementos dentro
-        myDetails.temperaments = "no-temperaments";
+        myDetails.temperaments = "No Temperaments";
       }
       console.log(myDetails);
       return {
