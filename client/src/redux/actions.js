@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 const miApi = "http://localhost:3001";
+axios.defaults.baseURL = miApi
 
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
@@ -39,7 +40,7 @@ export function getAllDogs() {
 export function getTemperaments() {
   return async function (dispatch) {
     try {
-      var temp = await axios.get(`${miApi}/temperament`);
+      var temp = await axios.get(`/temperament`);
       return dispatch({
         type: GET_TEMPERAMENTS,
         payload: temp.data,
@@ -88,7 +89,7 @@ export function getBreed(payload) {
   return async function (dispatch) {
     try {
       dispatch(setLoading(true));
-      var breed = await axios.get(`${miApi}/dogs?name=${payload}`);
+      var breed = await axios.get(`/dogs?name=${payload}`);
       return dispatch({
         type: GET_BREED,
         payload: breed.data,
@@ -131,7 +132,7 @@ export function postDog(payload) {
   return async function (dispatch) {
     try {
       dispatch(setLoading(true));
-      const data = await axios.post("http://localhost:3001/dog", payload);
+      const data = await axios.post(`/dog`, payload);
       return data;
     } catch (error) {
       dispatch({
@@ -146,7 +147,7 @@ export function postDog(payload) {
 }
 
 export function showDogDetails(id) {
-  const endpoint = `${miApi}/dogs/${id}`;
+  const endpoint = `/dogs/${id}`;
   return async function (dispatch) {
     try {
       dispatch(setLoading(true));
