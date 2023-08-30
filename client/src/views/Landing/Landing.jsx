@@ -4,7 +4,7 @@ import style from "./Landing.module.css";
 
 //#00c1b5 Color celeste
 
-function LandingPage() {
+function Landing() {
   return (
     <div className={style.containerPadre}>
       <div className={style.containerIzq}>
@@ -23,4 +23,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default Landing;
