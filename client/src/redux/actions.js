@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-const miApi = "http://localhost:3001";
+const miApi = "https://dogspi.onrender.com";
 axios.defaults.baseURL = miApi
 
 export const GET_ALL_DOGS = "GET_ALL_DOGS";
